@@ -11,7 +11,7 @@ MVVM Architecture: Follows the Model-View-ViewModel pattern for ease of testing 
 Android Developer Friendly: Offers an intuitive interface for those accustomed to Android and Kotlin.
 Internationalization Support: Ready for global reach, allowing easy localization and adaptation to various languages and regions.
 
-![image](https://github.com/kdroidFilter/compose-desktop/assets/144903939/306f5633-ad1e-4f0b-88b5-597194d33ee5)
+![image](https://github.com/kdroidFilter/compose-desktop/assets/144903939/5a6376df-b3a6-4b0e-9873-27fdc58b2089)
 ![image](https://github.com/kdroidFilter/compose-desktop/assets/144903939/a99f595a-742d-40cb-a1f7-c73651325cb1)
 ![image](https://github.com/kdroidFilter/compose-desktop/assets/144903939/5d1d6cf7-1ef5-4e34-a5a4-5ad9847ec413)
 
