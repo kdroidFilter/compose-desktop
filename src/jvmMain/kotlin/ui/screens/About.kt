@@ -74,7 +74,7 @@ fun About(vm: MainViewModel) {
                 )
             }
             Text("or Follow me on : ")
-            Row {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 IconButton(
                     { openUrlInBrowser("https://ko-fi.com/lomityaesh") },
                     modifier = PointerModifier
