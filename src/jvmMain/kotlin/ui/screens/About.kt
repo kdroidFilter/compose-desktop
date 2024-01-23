@@ -109,7 +109,7 @@ fun About(vm: MainViewModel) {
                     )
                     Text(" & ")
                     LinkText(
-                        "Compose Multiplateforme",
+                        "Compose Multiplateform",
                         "https://jetbrains.com/lp/compose-multiplatform"
                     )
                 }
