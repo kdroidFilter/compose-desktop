@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--MAIN UI-->
-    <string name="app_name">האפליקצייה שלי</string>
+    <string name="app_name">קומפוס דסקטופ</string>
     <string name="error_not_internet_connection">שגיאה, אתם לא מחוברים לאינטרנט.</string>
+    <string name="kofi_button">תמכו בי בקופי</string>
 
     <!--First Config -->
     <string name="first_config_title">הגדרה ראשונה</string>
