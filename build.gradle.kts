@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
@@ -28,6 +29,39 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
                 implementation(compose.desktop.currentOs)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                @OptIn(ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
+
+                // PreCompose Libraries
+                api(libs.precompose)
+                api(libs.precompose.viewmodel)
+
+                // Utility Libraries
+                implementation(libs.notify)
+                implementation(libs.jsystemThemeDetector)
+                implementation(libs.logbackClassic)
+
+                // Icons and UI Enhancements
+                implementation(libs.compose.material.icons.extended)
+                implementation(libs.fontAwesome)
+                implementation(libs.richEditorCompose)
+                implementation(libs.multiplatformSettings)
+
+                // Ktor for Networking
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.gson)
+
+
+                // Miscellaneous Libraries
+                implementation(libs.jsoup)
+                implementation(libs.materialKolor)
+                implementation(libs.mpfilepicker)
             }
         }
     }

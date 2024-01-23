@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--MAIN UI-->
+    <string name="app_name">Mon application</string>
+    <string name="error_not_internet_connection">Erreur, vous n'êtes pas connectés à Internet.</string>
+
+    <!--First Config -->
+    <string name="first_config_title">Première configuration</string>
+    <string name="welcome_message">Bienvenue dans notre application ! Nous sommes ravis de vous avoir parmi nous. Profitez d'une expérience exceptionnelle en explorant toutes les fonctionnalités que nous avons à offrir. Que ce soit pour vous divertir, vous informer ou vous connecter avec d'autres utilisateurs, notre application est là pour répondre à vos besoins. N'hésitez pas à personnaliser votre profil et à nous contacter si vous avez des questions. Bienvenue à bord !</string>
+    <string name="end_configuration">Confirmer</string>
+
+    <!-- Home Page -->
+    <string name="hello">Bonjour </string>
+
+    <!--About Page-->
+    <string name="about_title">À propos</string>
+    <string name="version">Version : </string>
+
+    <!--License Page-->
+    <string name="license_title">Licence</string>
+
+    <!-- Contact Home Page -->
+    <string name="contact_title">Contact</string>
+    <string name="contact_info_message">Nous sommes toujours heureux de recevoir vos questions, commentaires et suggestions. Votre avis est essentiel pour nous aider à améliorer nos services.</string>
+    <string name="enter_name">Entrez votre nom</string>
+    <string name="enter_email">Entrez votre email</string>
+    <string name="enter_subject">Entrez l'objet du mail</string>
+    <string name="enter_message">Entrez votre message</string>
+    <string name="name">Nom</string>
+    <string name="email">Email</string>
+    <string name="subject">Objet</string>
+    <string name="message">Message</string>
+    <string name="send">Envoyer</string>
+    <plurals name="error_check_correct_fields">
+        <item quantity="one">Erreur : Veuillez vérifier et corriger le champ indiqué.</item>
+        <item quantity="other">Erreur : Veuillez vérifier et corriger les champs indiqués.</item>
+    </plurals>
+    <!-- Contact Confirmation Page -->
+    <string name="contact_confirmation_title">Message Envoyé</string>
+    <string name="contact_confirmation_message">Votre message a bien été envoyé</string>
+
+    <!--SnackBar Action -->
+    <string name="exit_action">Quitter l'application</string>
+
+    <!--SETTINGS PAGE -->
+    <string name="settings_title">Réglages</string>
+    <string name="basic_settings">Basiques</string>
+    <string name="advanced_settings">Avancées</string>
+    <string name="reset_settings_button">Reinitialiser les réglages</string>
+    <string name="reset_success_message">Les paramètres de l'application ont été réinitialisés avec succès. Veuillez redémarrer l'application pour que tous les changements prennent effet.</string>
+
+    <!-- Main Category: User Interface Settings -->
+    <string name="user_interface_settings_label">Paramètres de l'Interface Utilisateur</string>
+    <string name="user_interface_appearance_label">Paramètres d'Apparence</string>
+    <string name="user_interface_behavior_label">Paramètres de Comportement</string>
+    <string name="language_settings_category_label">Paramètres de langue</string>
+
+
+    <!--- Sub-Category: Window Placement Options -->
+    <string name="window_opening_mode_label">Choisir le mode d'ouverture de la fenêtre</string>
+    <string name="window_placement_floating_label">Flottante</string>
+    <string name="window_placement_maximized_label">Maximisée</string>
+    <string name="window_placement_fullscreen_label">Plein Écran</string>
+
+    <!--- Sub-Category: Dark/Light Theme Mode -->
+    <string name="select_theme_mode_label">Choisir entre le mode sombre et le mode clair</string>
+    <string name="light_mode">Mode Clair</string>
+    <string name="dark_mode">Mode Sombre</string>
+    <string name="auto_mode">Automatique</string>
+
+    <!--- Sub-Category: Theme Color Adjustments -->
+    <string name="select_theme_color_label">Choisir une couleur pour le thème</string>
+    <string name="color_palette_label">Palette de couleurs</string>
+    <string name="select_topappbar_style_label">Choisir le style de la TopAppBar</string>
+
+    <!--- Sub-Catefory: UI Switch -->
+    <string name="donation_button_switch_label">Afficher le bouton de donation</string>
+    <string name="toggle_dark_light_mode_switch_label">Afficher le bouton de basculement entre le mode sombre et le mode clair</string>
+    <string name="toggle_feed_switch_label">Afficher le boutton de Feed</string>
+
+
+    <!--- Sub-Category: Language Selection -->
+    <string name="select_language_label">Choisir la langue</string>
+    <string name="language_change_success_message">La langue a été modifiée avec succès. Veuillez redémarrer l'application pour appliquer les modifications.</string>
+
+    <!-- Updater Dialog -->
+    <string name="update_available">Mise à jour disponible</string>
+    <string name="new_version_available">Une nouvelle version de l'application est disponible. Voulez-vous mettre à jour maintenant ?</string>
+    <string name="update">Mettre à jour</string>
+    <string name="later">Plus tard</string>
+
+
+
+</resources>

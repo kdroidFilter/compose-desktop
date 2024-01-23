@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--MAIN UI-->
+    <string name="app_name">My app</string>
+    <string name="error_not_internet_connection">Error, you're not connected to Internet.</string>
+
+    <!--First Config -->
+    <string name="first_config_title">First Config</string>
+    <string name="welcome_message">Welcome to our app! We are delighted to have you with us. Enjoy an exceptional experience by exploring all the features we have to offer. Whether it's for entertainment, information, or connecting with other users, our app is here to meet your needs. Feel free to customize your profile and contact us if you have any questions. Welcome aboard!</string>
+    <string name="end_configuration">Confirm</string>
+
+    <!-- Home Page -->
+    <string name="hello">Hi </string>
+
+    <!--About Page-->
+    <string name="about_title">About</string>
+    <string name="version">Version : </string>
+
+    <!--License Page-->
+    <string name="license_title">License</string>
+
+    <!-- Contact Home Page -->
+    <string name="contact_title">Contact</string>
+    <string name="contact_info_message">We are always happy to receive your questions, comments, and suggestions. Your feedback is essential to help us improve our services.</string>
+    <string name="enter_name">Enter your name</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_subject">Enter the email subject</string>
+    <string name="enter_message">Enter your message</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="subject">Subject</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
+    <plurals name="error_check_correct_fields">
+        <item quantity="one">Error: Please check and correct the indicated field.</item>
+        <item quantity="other">Error: Please check and correct the indicated fields.</item>
+    </plurals>
+    <!-- Contact Confirmation Page -->
+    <string name="contact_confirmation_title">Message Sent</string>
+    <string name="contact_confirmation_message">Your message has been successfully sent</string>
+
+    <!--SnackBar Action -->
+    <string name="exit_action">Exit app</string>
+
+    <!--SETTINGS PAGE -->
+    <string name="settings_title">Settings</string>
+    <string name="basic_settings">Basic</string>
+    <string name="advanced_settings">Advanced</string>
+    <string name="reset_settings_button">Reset settings</string>
+    <string name="reset_success_message">The app settings have been successfully reset. Please restart the app for all changes to take effect.</string>
+
+    <!-- Main Category: User Interface Settings -->
+    <string name="user_interface_settings_label">User Interface Settings</string>
+    <string name="user_interface_appearance_label">Appearance Settings</string>
+    <string name="user_interface_behavior_label">Behavior Settings</string>
+    <string name="language_settings_category_label">Language Settings</string>
+
+    <!--- Sub-Category: Window Placement Options -->
+    <string name="window_opening_mode_label">Choose Window Opening Mode</string>
+    <string name="window_placement_floating_label">Floating</string>
+    <string name="window_placement_maximized_label">Maximized</string>
+    <string name="window_placement_fullscreen_label">Fullscreen</string>
+
+    <!--- Sub-Category: Dark/Light Theme Mode -->
+    <string name="select_theme_mode_label">Choose between Dark and Light Mode</string>
+    <string name="light_mode">Light Mode</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="auto_mode">Auto</string>
+
+    <!--= Sub-Category: Theme Color Adjustments -->
+    <string name="select_theme_color_label">Select a Color for the Theme</string>
+    <string name="color_palette_label">Color Palette</string>
+    <string name="select_topappbar_style_label">Choose TopAppBar Style</string>
+
+    <!--- Sub-Catefory: UI Switch -->
+    <string name="donation_button_switch_label">Show Donation Button</string>
+    <string name="toggle_dark_light_mode_switch_label">Show Switch Button for Dark/Light Mode</string>
+    <string name="toggle_feed_switch_label">Show Feed Button</string>
+
+    <!--- Sub-Category: Language Selection -->
+    <string name="select_language_label">Select Language</string>
+    <string name="language_change_success_message">Language has been successfully changed. Please restart the app to apply the changes.</string>
+
+    <!-- Updater Dialog -->
+    <string name="update_available">Update Available</string>
+    <string name="new_version_available">A new version of the app is available. Would you like to update now?</string>
+    <string name="update">Update</string>
+    <string name="later">Later</string>
+
+</resources>
