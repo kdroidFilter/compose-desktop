@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--MAIN UI-->
-    <string name="app_name">קומפוס דסקטופ</string>
+    <string name="app_name">קומפוז דסקטופ</string>
     <string name="error_not_internet_connection">שגיאה, אתם לא מחוברים לאינטרנט.</string>
     <string name="kofi_button">תמכו בי בקופי</string>
 
