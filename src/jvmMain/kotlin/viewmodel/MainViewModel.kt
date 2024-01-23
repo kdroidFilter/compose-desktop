@@ -365,7 +365,7 @@ class MainViewModel(
     fun getLicense() = textRepository.getLicense
 
     init {
-        if(!wasConfig.value) checkForUpdates()
+      //  if(!wasConfig.value) checkForUpdates()
         kofiPostFetcher()
         textFetcher(textRepository.readmeUrl, "readmeOffline", _readme)
     }

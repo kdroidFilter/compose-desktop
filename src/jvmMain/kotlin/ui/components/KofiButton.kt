@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import utils.openUrlInBrowser
+import utils.stringResource
 import viewmodel.MainViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -74,7 +75,7 @@ fun KofiButton(vm: MainViewModel) {
                     exit = fadeOut() + shrinkHorizontally() // Animation de sortie
                 ) {
                     Text(
-                        "Support me on Ko-Fi",
+                        stringResource("kofi_button"),
                         modifier = Modifier.padding(start = 8.dp),
                         style = MaterialTheme.typography.titleMedium
                     )

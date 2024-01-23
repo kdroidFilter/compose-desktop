@@ -1,6 +1,7 @@
 package ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -15,11 +16,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
+import utils.openUrlInBrowser
 import java.awt.Cursor
+import java.nio.file.Paths
+import kotlin.io.path.exists
+import kotlin.io.path.inputStream
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun loadAppIcon(): Painter {
+    return System.getProperty("app.dir")
+        ?.let { Paths.get(it, "icon-512.png") }
+        ?.takeIf { it.exists() }
+        ?.inputStream()
+        ?.buffered()
+        ?.use { BitmapPainter(loadImageBitmap(it)) }
+        ?: painterResource("AppIcon.png")
+}
 
 val PointerModifier = Modifier.pointerHoverIcon(
     PointerIcon(
@@ -28,6 +52,25 @@ val PointerModifier = Modifier.pointerHoverIcon(
         )
     )
 )
+
+@Composable
+fun LinkText(
+    text: String,
+    url: String,
+    style: TextStyle = MaterialTheme.typography.bodyMedium,
+    color: Color = MaterialTheme.colorScheme.primary,
+    textDecoration: TextDecoration = TextDecoration.Underline
+) {
+    Text(
+        text = text,
+        modifier = PointerModifier.clickable {
+            openUrlInBrowser(url)
+        },
+        color = color,
+        textDecoration = textDecoration,
+        style = style
+    )
+}
 
 @Composable
 fun SubTitle(text: String) {
@@ -46,7 +89,7 @@ fun RowLabel(text: String) {
 }
 
 @Composable
-fun InfoContainer(text: String, background : Color = MaterialTheme.colorScheme.tertiaryContainer) {
+fun InfoContainer(text: String, background: Color = MaterialTheme.colorScheme.tertiaryContainer) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -58,7 +101,13 @@ fun InfoContainer(text: String, background : Color = MaterialTheme.colorScheme.t
                 shape = RoundedCornerShape(20.dp)
             )
             .padding(16.dp)
-    ) { Text(text = text, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Justify) }
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Justify
+        )
+    }
 }
 
 

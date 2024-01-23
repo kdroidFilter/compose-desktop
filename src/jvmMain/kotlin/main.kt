@@ -25,6 +25,7 @@ import moe.tlaster.precompose.navigation.rememberNavigator
 import navigation.NavGraph
 import ui.components.KofiButton
 import ui.components.TopBarElements
+import ui.components.loadAppIcon
 import ui.dialogs.UpdaterDialog
 import utils.Localization
 import utils.SnackBarDisplayer
@@ -37,14 +38,7 @@ import kotlin.io.path.exists
 import kotlin.io.path.inputStream
 
 fun main() = application {
-    val appIcon = remember {
-        System.getProperty("app.dir")
-            ?.let { Paths.get(it, "icon-512.png") }
-            ?.takeIf { it.exists() }
-            ?.inputStream()
-            ?.buffered()
-            ?.use { BitmapPainter(loadImageBitmap(it)) }
-    }
+    val appIcon = loadAppIcon()
     val vm = MainViewModel(
         localizationRepository = Localization,
         preferencesManager = PreferencesManager,
