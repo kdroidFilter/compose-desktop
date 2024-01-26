@@ -3,11 +3,11 @@
     <!--MAIN UI-->
     <string name="app_name">קומפוז דסקטופ</string>
     <string name="error_not_internet_connection">שגיאה, אתם לא מחוברים לאינטרנט.</string>
-    <string name="kofi_button">תמכו בי בקופי</string>
+    <string name="kofi_button">תמכו בי בKofi</string>
 
     <!--First Config -->
     <string name="first_config_title">הגדרה ראשונה</string>
-    <string name="welcome_message">ברוך הבא לאפליקציה שלנו! אנחנו שמחים לראותך איתנו. תהנה מחוויית מעולה כשתגלה את כל התכונות שיש לנו להציע. בין אם זה לצורך בידור, מידע או התחברות למשתמשים אחרים, האפליקציה שלנו כאן כדי לעמוד בצרכיך. אל תהסס להתאים אישית את הפרופיל שלך וליצור איתנו קשר אם יש לך שאלות. ברוך הבא לסירה!</string>
+    <string name="welcome_message">ברוך הבא לאפליקציה שלנו! אנחנו שמחים לראותך איתנו. תהנה מחוויית מעולה כשתגלה את כל התכונות שיש לנו להציע. בין אם זה לצורך בידור, מידע או התחברות למשתמשים אחרים, האפליקציה שלנו כאן כדי לעמוד בצרכיך. אל תהסס להתאים אישית את הפרופיל שלך וליצור איתנו קשר אם יש לך שאלות. ברוך הבא!</string>
     <string name="end_configuration">אשר</string>
 
     <!-- Home Page -->
@@ -22,7 +22,7 @@
 
     <!-- Contact Home Page -->
     <string name="contact_title">צור קשר</string>
-    <string name="contact_info_message">תמיד שמחים לקבל את שאלותיך, הערותיך והצעותיך. משובך חשוב לנו כדי לשפר את השירותים שלנו.</string>
+    <string name="contact_info_message">תמיד שמחים לקבל את שאלותיך, הערותיך והצעותיך. המשוב חשוב לנו כדי לשפר את השירותים שלנו.</string>
     <string name="enter_name">הזן את שמך</string>
     <string name="enter_email">הזן את האימייל שלך</string>
     <string name="enter_subject">הזן את נושא האימייל</string>
@@ -41,14 +41,14 @@
     <string name="contact_confirmation_message">ההודעה נשלחה בהצלחה</string>
 
     <!--SnackBar Action -->
-    <string name="exit_action">יציאה מהאפליקציה</string>
+    <string name="exit_action">יציאה מהתוכנה</string>
 
     <!--SETTINGS PAGE -->
     <string name="settings_title">הגדרות</string>
     <string name="basic_settings">בסיסיות</string>
-    <string name="advanced_settings">מתקדמיות</string>
+    <string name="advanced_settings">מתקדמות</string>
     <string name="reset_settings_button">אפס הגדרות</string>
-    <string name="reset_success_message">הגדרות האפליקציה אופסו בהצלחה. אנא הפעל מחדש את האפליקציה כדי שכל השינויים ייכנסו לתוקף.</string>
+    <string name="reset_success_message">הגדרות התוכנה אופסו בהצלחה. אנא הפעל מחדש את התוכנה כדי שכל השינויים ייכנסו לתוקף.</string>
 
 <!-- Main Category: User Interface Settings -->
     <string name="user_interface_settings_label">הגדרות ממשק משתמש</string>
@@ -65,7 +65,7 @@
     <!--- Sub-Category: Dark/Light Theme Mode -->
     <string name="select_theme_mode_label">בחר בין מצב כהה למצב בהיר</string>
     <string name="light_mode">מצב בהיר</string>
-    <string name="dark_mode">מצב שחור</string>
+    <string name="dark_mode">מצב כהה</string>
     <string name="auto_mode">אוטומטי</string>
 
     <!-- Sub-Category: Theme Color Adjustments -->
@@ -80,11 +80,11 @@
 
     <!--- Sub-Category: Language Selection -->
     <string name="select_language_label">בחר שפה</string>
-    <string name="language_change_success_message">השפה שונתה בהצלחה. אנא הפעל מחדש את האפליקציה כדי ליישם את השינויים.</string>
+    <string name="language_change_success_message">השפה שונתה בהצלחה. אנא הפעל מחדש את התוכנהכדי ליישם את השינויים.</string>
 
     <!-- Updater Dialog -->
     <string name="update_available">עדכון זמין</string>
-    <string name="new_version_available">גרסה חדשה של האפליקציה זמינה. האם ברצונך לעדכן כעת?</string>
+    <string name="new_version_available">גרסה חדשה של התוכנה זמינה. האם ברצונך לעדכן כעת?</string>
     <string name="update">עדכן</string>
     <string name="later">מאוחר יותר</string>
 
