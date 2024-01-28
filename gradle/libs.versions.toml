@@ -17,6 +17,8 @@ multiplatformSettings = "1.1.1"
 notify = "4.4"
 jsystemThemeDetector = "3.6"
 logback = "1.4.11"
+pdfReader = "1.0.0"
+
 # Miscellaneous Libraries
 jsoup = "1.17.2"
 materialKolor = "1.3.0"
@@ -42,6 +44,7 @@ multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", versi
 notify = { module = "com.dorkbox:Notify", version.ref = "notify" }
 jsystemThemeDetector = { module = "com.github.Dansoftowner:jSystemThemeDetector", version.ref = "jsystemThemeDetector" }
 logbackClassic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+pdfReader = {module = "dev.zt64:compose-pdf-desktop", version.ref = "pdfReader"}
 # Miscellaneous Libraries
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }

@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.kdroidFilter"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -62,6 +62,8 @@ kotlin {
                 implementation(libs.jsoup)
                 implementation(libs.materialKolor)
                 implementation(libs.mpfilepicker)
+        //        implementation(libs.pdfReader)
+
             }
         }
     }
@@ -78,6 +80,9 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "MainKt"
+        buildTypes.release.proguard {
+            configurationFiles.from(project.file("root-config.pro"))
+        }
     }
 }
 

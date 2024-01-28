@@ -7,4 +7,6 @@ object TextRepository {
     val getLicense = TextRepository::class.java.classLoader.getResourceAsStream("LICENSE.txt")
         ?.readBytes()
         ?.decodeToString()
+
+
 }

@@ -1,5 +1,6 @@
 package ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,11 +8,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.zt64.compose.pdf.component.PdfHorizontalPager
+import dev.zt64.compose.pdf.component.PdfPage
+import dev.zt64.compose.pdf.component.PdfVerticalPager
+import dev.zt64.compose.pdf.rememberRemotePdfState
 import moe.tlaster.precompose.navigation.Navigator
 import utils.stringResource
 import viewmodel.MainViewModel
+import java.net.URL
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Home(vm: MainViewModel, navigator: Navigator) {
     Column(

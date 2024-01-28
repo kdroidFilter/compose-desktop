@@ -3,8 +3,10 @@
 .gradle/
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
-/build
+build
 **/build/
+*.deb
+output
 xcuserdata
 !src/**/build/
 local.properties
@@ -19,3 +21,4 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+

@@ -16,6 +16,7 @@ import enums.NavigationDestination
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import ui.components.InfoContainer
+import ui.components.PointerModifier
 import utils.stringResource
 import viewmodel.MainViewModel
 
@@ -39,6 +40,7 @@ fun FirstConfig(vm: MainViewModel, navigator: Navigator) {
             )
             Spacer(Modifier.height(8.dp))
             Button(
+                modifier = PointerModifier,
                 onClick = {
                     vm.saveName()
                     vm.configDone()
