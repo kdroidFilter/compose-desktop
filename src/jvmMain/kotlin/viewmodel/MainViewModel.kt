@@ -304,15 +304,18 @@ class MainViewModel(
 
     //THEME COLOR Style
     fun getColors() = colorRepository.getColors()
-    private var _themeColorName by mutableStateOf(preferencesManager.getThemeColor())
+    private var _themeColorName = MutableStateFlow(preferencesManager.getThemeColor())
     fun setThemeColor(color: String) {
         preferencesManager.setThemeColor(color)
-        _themeColorName = color
+        _themeColorName.value = color
     }
 
-    fun getCurrentThemeColor(): ColorThemeModel? {
-        return getColors().find { it.name == _themeColorName }
-    }
+    // Transformez _themeColorName en _currentThemeColor
+    private val _currentThemeColor = _themeColorName.map { colorName ->
+        colorRepository.getColors().find { it.name == colorName }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), colorRepository.getColors().first())
+
+    val currentThemeColor = _currentThemeColor
 
     // THEME PALETTE STYLE
     fun getPalette() = colorRepository.getPalette()

@@ -24,7 +24,7 @@ fun App(
             MaterialTheme(
                 typography = NotoFont(vm).typography
             ) {
-                vm.getCurrentThemeColor()?.let { getThemeColor ->
+                vm.currentThemeColor.collectAsState().value?.let { getThemeColor ->
                     vm.getCurrentThemePalette()?.let { getThemePalette ->
                         DynamicMaterialTheme(
                             seedColor = getThemeColor.color,

@@ -221,7 +221,7 @@ fun ColorSelection(vm: MainViewModel) {
             vm.getColors().forEach { color ->
                 // Animation de la taille
                 val size = animateDpAsState(
-                    targetValue = if (color.name == vm.getCurrentThemeColor()!!.name) 32.dp else 24.dp,
+                    targetValue = if (color.name == vm.currentThemeColor.collectAsState().value!!.name) 32.dp else 24.dp,
                     animationSpec = tween(
                         durationMillis = 300
                     )
