@@ -116,8 +116,8 @@ class MainViewModel(
     }
 
     //ROUTING SYSTEM
-    private var _currentRoute = mutableStateOf(NavigationDestination.Home.route)
-    val currentRoute = _currentRoute
+    private var _currentRoute = MutableStateFlow(NavigationDestination.Home.route)
+    val currentRoute = _currentRoute.asStateFlow()
     fun setCurrentRoute(route: String) {
         _currentRoute.value = route
     }
@@ -151,8 +151,8 @@ class MainViewModel(
     }
 
     //APPBAR TITLE
-    private var _appBarTitle = mutableStateOf(stringResource("app_name"))
-    val appBarTitle = _appBarTitle
+    private var _appBarTitle = MutableStateFlow(stringResource("app_name"))
+    val appBarTitle = _appBarTitle.asStateFlow()
     fun setAppBarTitle(title: String) {
         _appBarTitle.value = title
     }
@@ -169,8 +169,8 @@ class MainViewModel(
     //SETTINGS TABS SELECTOR
     val settingTabs = settingsTabsRepository.getTabs()
 
-    private val _selectedTabIndex = mutableStateOf(0)
-    val selectedTabIndex = _selectedTabIndex
+    private val _selectedTabIndex = MutableStateFlow(0)
+    val selectedTabIndex = _selectedTabIndex.asStateFlow()
 
     fun onTabSelected(index: Int) {
         _selectedTabIndex.value = index

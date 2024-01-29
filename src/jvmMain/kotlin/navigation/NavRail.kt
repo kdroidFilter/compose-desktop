@@ -23,13 +23,13 @@ fun NavRail(vm: MainViewModel, navigator: Navigator) {
                 it == NavigationDestination.ContactConfirmation ||
                 it == NavigationDestination.FirstConfig
             ) return@forEach
-            val isSelected = it.route == vm.currentRoute.value
+            val isSelected = it.route == vm.currentRoute.collectAsState().value
             if (vm.wasConfig.collectAsState().value) return@forEach
             NavigationRailItem(
                 icon = { Icon(imageVector = it.icon!!, contentDescription = it.name) },
                 label = { Text(it.title) },
                 onClick = { if(!isSelected) navigator.navigate(it.route) },
-                selected = it.route == vm.currentRoute.value,
+                selected = it.route == vm.currentRoute.collectAsState().value,
                 modifier = PointerModifier
             )
         }

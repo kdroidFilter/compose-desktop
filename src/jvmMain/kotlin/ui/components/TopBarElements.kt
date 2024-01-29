@@ -68,7 +68,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
         )
         val material3 = TopAppBarDefaults.centerAlignedTopAppBarColors()
         CenterAlignedTopAppBar(title = {
-            Text(vm.appBarTitle.value, modifier = Modifier.padding(start = 64.dp))
+            Text(vm.appBarTitle.collectAsState().value, modifier = Modifier.padding(start = 64.dp))
         }, navigationIcon = { HomeButton(vm) }, actions = {
             UpdateButton()
             KofiPostButton(vm.kofiPosts)

@@ -8,10 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import dev.zt64.compose.pdf.component.PdfHorizontalPager
-import dev.zt64.compose.pdf.component.PdfPage
-import dev.zt64.compose.pdf.component.PdfVerticalPager
-import dev.zt64.compose.pdf.rememberRemotePdfState
 import moe.tlaster.precompose.navigation.Navigator
 import utils.stringResource
 import viewmodel.MainViewModel
