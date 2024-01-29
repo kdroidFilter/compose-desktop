@@ -93,7 +93,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     @Composable
     fun FullScreenButton() {
         val icon =
-            if (vm.isNotFullScreen()) Icons.Rounded.Fullscreen else Icons.Rounded.FullscreenExit
+            if (vm.isNotFullScreen().collectAsState().value) Icons.Rounded.Fullscreen else Icons.Rounded.FullscreenExit
         IconButton(modifier = PointerModifier, onClick = { vm.toggleFullScreen() }) {
             Icon(
                 imageVector = icon, null
@@ -165,7 +165,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun ExitButton() {
-        if (!vm.isNotFullScreen()) {
+        if (!vm.isNotFullScreen().collectAsState().value) {
             IconButton(modifier = PointerModifier, onClick = {
                 exitProcess(0)
             }) {

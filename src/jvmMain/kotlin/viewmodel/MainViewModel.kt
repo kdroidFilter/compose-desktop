@@ -289,18 +289,18 @@ class MainViewModel(
         size = DpSize(1280.dp, 720.dp)
     )
     val windowsState = _windowsState
-    private var _windowsPlacementToggle by
-    mutableStateOf(WindowsPlacementConfig.getPropertyByPlacement(_windowsPlacement) != WindowsPlacementConfig.FULLSCREEN.property)
+    private var _windowsPlacementToggle =
+    MutableStateFlow(WindowsPlacementConfig.getPropertyByPlacement(_windowsPlacement) != WindowsPlacementConfig.FULLSCREEN.property)
 
     //FULLSCREEN TOGGLE
     fun toggleFullScreen() {
-        if (_windowsPlacementToggle)
+        if (_windowsPlacementToggle.value)
             _windowsState.placement = WindowPlacement.Fullscreen
         else _windowsState.placement = WindowPlacement.Floating
-        _windowsPlacementToggle = !_windowsPlacementToggle
+        _windowsPlacementToggle.value = !_windowsPlacementToggle.value
     }
 
-    fun isNotFullScreen() = _windowsPlacementToggle
+    fun isNotFullScreen() = _windowsPlacementToggle.asStateFlow()
 
     //THEME COLOR Style
     fun getColors() = colorRepository.getColors()
