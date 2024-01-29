@@ -106,7 +106,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     fun HomeButton(vm: MainViewModel) {
         val isRtl = vm.isCurrentLanguageRtl()
         val canGoBack =
-            navigator.canGoBack.collectAsState(false).value && vm.currentRoute.value != NavigationDestination.Home.route
+            navigator.canGoBack.collectAsState(false).value && vm.currentRoute.collectAsState().value != NavigationDestination.Home.route
         val isLoading = vm.isLoading.collectAsState(false).value
         val backIcon = if (!isRtl) Icons.Rounded.ArrowBack else Icons.Rounded.ArrowForward
         val modifier = Modifier.size(24.dp)

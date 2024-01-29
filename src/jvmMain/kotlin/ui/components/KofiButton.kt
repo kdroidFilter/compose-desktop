@@ -14,6 +14,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,11 +35,9 @@ import viewmodel.MainViewModel
 @Composable
 fun KofiButton(vm: MainViewModel) {
     var isHovered by remember { mutableStateOf(false) }
-    val isActivated = vm.kofiButtonStatus.value
+    val isActivated = vm.kofiButtonStatus.collectAsState().value
 
-    if (!isActivated) {
-        return
-    }
+    if (!isActivated) return
 
     Row(
         modifier = Modifier

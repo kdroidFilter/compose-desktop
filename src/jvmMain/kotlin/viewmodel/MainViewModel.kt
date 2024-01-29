@@ -332,13 +332,13 @@ class MainViewModel(
     val currentThemePalette = _currentThemePalette
 
     //KOFI BUTTON MANAGER
-    private var _kofiButtonStatus = mutableStateOf(preferencesManager.getKofiButtonStatus())
+    private var _kofiButtonStatus = MutableStateFlow(preferencesManager.getKofiButtonStatus())
     fun setKofiButtonStatus(status: Boolean) {
         preferencesManager.setKofiButtonStatus(status)
         _kofiButtonStatus.value = status
     }
 
-    val kofiButtonStatus = _kofiButtonStatus
+    val kofiButtonStatus = _kofiButtonStatus.asStateFlow()
 
     // CLEAR SETTINGS
     fun clearSettings() {

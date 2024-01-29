@@ -363,7 +363,7 @@ fun AppBarModeSelection(vm: MainViewModel) {
 @Composable
 fun KofiButtonSwitch(vm: MainViewModel) {
     AlignedRow({ RowLabel(stringResource("donation_button_switch_label")) }, {
-        val bool = vm.kofiButtonStatus
+        val bool = vm.kofiButtonStatus.collectAsState()
         Switch(
             checked = bool.value, onCheckedChange = {
                 vm.setKofiButtonStatus(it)
