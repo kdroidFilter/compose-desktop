@@ -244,7 +244,7 @@ fun ColorSelection(vm: MainViewModel) {
 fun PaletteSelection(vm: MainViewModel) {
     AlignedRow({ RowLabel(stringResource("color_palette_label")) }, {
         var isOpened by remember { mutableStateOf(false) }
-        var selectedPalette by remember { mutableStateOf(vm.getCurrentThemePalette()!!.name) }
+        var selectedPalette by remember { mutableStateOf(vm.currentThemePalette.value!!.name) }
 
         TextButton(onClick = { isOpened = true }, modifier = PointerModifier) {
             Text(selectedPalette)
@@ -255,7 +255,7 @@ fun PaletteSelection(vm: MainViewModel) {
                     DropdownMenuItem(text = {
                         Text(
                             text = palette.name,
-                            fontWeight = if (palette.name == vm.getCurrentThemePalette()!!.name) FontWeight.Bold else FontWeight.Normal
+                            fontWeight = if (palette.name == vm.currentThemePalette.value!!.name) FontWeight.Bold else FontWeight.Normal
                         )
                     }, onClick = {
                         vm.setThemePalette(palette.name)

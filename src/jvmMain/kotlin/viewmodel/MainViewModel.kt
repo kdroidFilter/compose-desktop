@@ -319,15 +319,17 @@ class MainViewModel(
 
     // THEME PALETTE STYLE
     fun getPalette() = colorRepository.getPalette()
-    private var _themePaletteName by mutableStateOf(preferencesManager.getThemePalette())
+    private var _themePaletteName = MutableStateFlow(preferencesManager.getThemePalette())
     fun setThemePalette(palette: String) {
         preferencesManager.setThemePalette(palette)
-        _themePaletteName = palette
+        _themePaletteName.value = palette
     }
 
-    fun getCurrentThemePalette(): PaletteThemeMode? {
-        return getPalette().find { it.name == _themePaletteName }
-    }
+    private val _currentThemePalette = _themePaletteName.map { paletteName ->
+        getPalette().find { it.name == paletteName }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), getPalette().first())
+
+    val currentThemePalette = _currentThemePalette
 
     //KOFI BUTTON MANAGER
     private var _kofiButtonStatus = mutableStateOf(preferencesManager.getKofiButtonStatus())
