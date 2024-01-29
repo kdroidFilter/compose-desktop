@@ -3,6 +3,7 @@ package com.example.compose
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.materialkolor.DynamicMaterialTheme
@@ -15,7 +16,7 @@ fun App(
     vm: MainViewModel,
     content: @Composable() () -> Unit,
 ) {
-    val useDarkTheme = vm.useDarkTheme.value
+    val useDarkTheme = vm.useDarkTheme.collectAsState().value
     val layoutDirection = if (vm.isCurrentLanguageRtl()) LayoutDirection.Rtl else LayoutDirection.Ltr
     vm.registerDarkThemeListener()
     CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {

@@ -37,8 +37,11 @@ import enums.ThemeMode
 import enums.WindowsPlacementConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
@@ -177,8 +180,8 @@ class MainViewModel(
     }
 
     //APPBAR MODE
-    private fun getAppBarMode(): String = preferencesManager.getAppBarMode()
-    private val _appBarMode = mutableStateOf(getAppBarMode())
+    private var _appBarMode = MutableStateFlow(preferencesManager.getAppBarMode())
+
     fun getAppBarModeName(): String {
         return when (_appBarMode.value) {
             AppBarMode.MATERIAL3.name -> AppBarMode.MATERIAL3.text
@@ -192,14 +195,19 @@ class MainViewModel(
         _appBarMode.value = mode
     }
 
-    fun isMaterial3(): Boolean = _appBarMode.value == AppBarMode.MATERIAL3.name
+    private val _isMaterial3 = _appBarMode
+        .map { mode -> mode == AppBarMode.MATERIAL3.name }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), _appBarMode.value == AppBarMode.MATERIAL3.name)
+
+    val isMaterial3: StateFlow<Boolean> = _isMaterial3
+
 
     // DARK THEME FUNCTION
     private fun useDarKTheme() =
         themeModeRepository.useDarKTheme(preferencesManager.getCurrentTheme())
 
-    private var _useDarkTheme = mutableStateOf(useDarKTheme())
-    val useDarkTheme = _useDarkTheme
+    private var _useDarkTheme = MutableStateFlow(  useDarKTheme())
+    val useDarkTheme = _useDarkTheme.asStateFlow()
     fun setTheme(theme: String) {
         preferencesManager.setTheme(theme)
         _useDarkTheme.value = useDarKTheme()
@@ -211,7 +219,7 @@ class MainViewModel(
 
     fun getAllModes(): List<ThemeMode> = themeModeRepository.getAllModes()
     fun toggleTheme() {
-        useDarkTheme.value = !useDarkTheme.value
+        _useDarkTheme.value = !_useDarkTheme.value
     }
 
     fun registerDarkThemeListener() {
@@ -223,8 +231,8 @@ class MainViewModel(
     }
 
     //DARKMODE SWITCH MANAGER
-    private val _darkModeSwitch = mutableStateOf(preferencesManager.getDarkModeSwitch())
-    val darkModeSwitch = _darkModeSwitch
+    private val _darkModeSwitch = MutableStateFlow(preferencesManager.getDarkModeSwitch())
+    val darkModeSwitch = _darkModeSwitch.asStateFlow()
     fun setDarkModeSwitch(value: Boolean) {
         preferencesManager.setDarkModeSwitch(value)
         _darkModeSwitch.value = value

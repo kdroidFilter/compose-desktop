@@ -76,16 +76,16 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
             DarkThemeButton()
             VerticalButton()
             ExitButton()
-        }, colors = if (vm.isMaterial3()) material3 else material2
+        }, colors = if (vm.isMaterial3.collectAsState().value) material3 else material2
         )
     }
 
     @Composable
     fun DarkThemeButton() {
-        if (!vm.darkModeSwitch.value) return
+        if (!vm.darkModeSwitch.collectAsState().value) return
         IconButton(onClick = { vm.toggleTheme() }, modifier = PointerModifier) {
             Icon(
-                if (vm.useDarkTheme.value) Icons.Rounded.LightMode else Icons.Rounded.DarkMode, null
+                if (vm.useDarkTheme.collectAsState().value) Icons.Rounded.LightMode else Icons.Rounded.DarkMode, null
             )
         }
     }
