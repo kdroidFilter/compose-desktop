@@ -72,8 +72,8 @@ class MainViewModel(
         _wasConfig.value = false
     }
 
-    private val _name = mutableStateOf("")
-    val name = _name
+    private val _name = MutableStateFlow("")
+    val name = _name.asStateFlow()
     fun setName(name: String) {
         _name.value = name
     }

@@ -18,13 +18,13 @@ import viewmodel.MainViewModel
 fun NavRail(vm: MainViewModel, navigator: Navigator) {
     NavigationRail {
         NavigationDestination.entries.forEach {
+            if (vm.wasConfig.collectAsState().value) return@forEach
             if (it == NavigationDestination.License ||
                 it == NavigationDestination.About ||
                 it == NavigationDestination.ContactConfirmation ||
                 it == NavigationDestination.FirstConfig
             ) return@forEach
             val isSelected = it.route == vm.currentRoute.collectAsState().value
-            if (vm.wasConfig.collectAsState().value) return@forEach
             NavigationRailItem(
                 icon = { Icon(imageVector = it.icon!!, contentDescription = it.name) },
                 label = { Text(it.title) },

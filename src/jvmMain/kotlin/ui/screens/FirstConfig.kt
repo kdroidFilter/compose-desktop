@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,7 @@ fun FirstConfig(vm: MainViewModel, navigator: Navigator) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextField(
-                value = vm.name.value,
+                value = vm.name.collectAsState().value,
                 onValueChange = { vm.setName(it) },
                 placeholder = { Text(stringResource("enter_name")) },
                 label = { Text(stringResource("name")) },
