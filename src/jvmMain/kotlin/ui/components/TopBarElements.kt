@@ -185,7 +185,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun KofiPostButton(posts: List<data.model.KofiPost>) {
-        if(!vm.feedSwitch.value) return
+        if(!vm.feedSwitch.collectAsState().value) return
         var expanded by remember { mutableStateOf(false) }
 
         Box {

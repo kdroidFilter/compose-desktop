@@ -239,8 +239,8 @@ class MainViewModel(
     }
 
     //FEED SWITCH MANAGER
-    private val _feedSwitch = mutableStateOf(preferencesManager.getFeedSwitch())
-    val feedSwitch = _feedSwitch
+    private val _feedSwitch = MutableStateFlow(preferencesManager.getFeedSwitch())
+    val feedSwitch = _feedSwitch.asStateFlow()
     fun setFeedSwitch(value: Boolean) {
         preferencesManager.setFeedSwitch(value)
         _feedSwitch.value = value

@@ -387,7 +387,7 @@ fun DarkModeSwitchButton(vm: MainViewModel) {
 @Composable
 fun FeedSwitchButton(vm: MainViewModel) {
     AlignedRow({ RowLabel(stringResource("toggle_feed_switch_label")) }, {
-        val bool = vm.feedSwitch
+        val bool = vm.feedSwitch.collectAsState()
         Switch(
             checked = bool.value, onCheckedChange = {
                 vm.setFeedSwitch(it)
