@@ -149,10 +149,11 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
             DropdownMenu(expanded = isOpened, onDismissRequest = { isOpened = !isOpened }) {
                 val menuItems = listOf(NavigationDestination.About, NavigationDestination.License)
                 menuItems.forEach() { item ->
+                    val isSelected = item.route == vm.currentRoute.collectAsState().value
                     DropdownMenuItem(modifier = PointerModifier, text = {
                         Row {
                             Icon(imageVector = item.icon!!, contentDescription = item.name)
-                            Text(item.title, Modifier.padding(start = 4.dp))
+                            Text(item.title, Modifier.padding(start = 4.dp), fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal )
                         }
                     }, onClick = {
                         navigator.navigate(item.route)
