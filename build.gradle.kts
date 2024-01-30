@@ -8,7 +8,7 @@ plugins {
     id("dev.hydraulic.conveyor") version "1.6"
 }
 
-group = "io.github.kdroidFilter"
+group = "io.github.kdroidFilter.compose-desktop"
 version = "0.1.2"
 
 repositories {

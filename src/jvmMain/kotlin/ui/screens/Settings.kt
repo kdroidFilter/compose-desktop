@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -217,7 +218,7 @@ fun ClearSettingsButton(vm: MainViewModel) {
 @Composable
 fun ColorSelection(vm: MainViewModel) {
     AlignedRow({ RowLabel(stringResource("select_theme_color_label")) }, {
-        FlowRow {
+        FlowRow() {
             vm.getColors().forEach { color ->
                 // Animation de la taille
                 val size = animateDpAsState(
@@ -375,7 +376,7 @@ fun KofiButtonSwitch(vm: MainViewModel) {
 @Composable
 fun DarkModeSwitchButton(vm: MainViewModel) {
     AlignedRow({ RowLabel(stringResource("toggle_dark_light_mode_switch_label")) }, {
-        val bool = vm.darkModeSwitch
+        val bool = vm.darkModeSwitch.collectAsState()
         Switch(
             checked = bool.value, onCheckedChange = {
                 vm.setDarkModeSwitch(it)
