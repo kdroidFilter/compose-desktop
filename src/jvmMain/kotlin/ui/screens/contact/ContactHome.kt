@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -44,9 +45,9 @@ fun ContactHome(vm: MainViewModel, navigator: Navigator) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
-    val mailModel = vm.mailModel
+    val mailModel = vm.mailModel.collectAsState()
     val message = rememberRichTextState()
-    val fieldStatus = vm.formStatus.value
+    val fieldStatus = vm.formStatus.collectAsState().value
 
     Box(contentAlignment = Alignment.TopCenter, modifier = Modifier.fillMaxSize()) {
         Column(
@@ -69,7 +70,7 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
                         )
                     },
                     enabled = fieldStatus,
-                    isError = vm.isNameError.value,
+                    isError = vm.isNameError.collectAsState().value,
                     maxLines = 1
                 )
                 TextField(
@@ -85,7 +86,7 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
                         )
                     },
                     enabled = fieldStatus,
-                    isError = vm.isEmailError.value,
+                    isError = vm.isEmailError.collectAsState().value,
                     maxLines = 1
                 )
             }
@@ -103,7 +104,7 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
                     )
                 },
                 enabled = fieldStatus,
-                isError = vm.isSubjectError.value,
+                isError = vm.isSubjectError.collectAsState().value,
                 maxLines = 1
             )
 
