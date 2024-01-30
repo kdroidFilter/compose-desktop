@@ -7,9 +7,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.res.loadImageBitmap
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -32,10 +29,7 @@ import utils.SnackBarDisplayer
 import utils.stringResource
 import viewmodel.MainViewModel
 import java.awt.Dimension
-import java.nio.file.Paths
 import java.util.Locale
-import kotlin.io.path.exists
-import kotlin.io.path.inputStream
 
 fun main() = application() {
     val appIcon = loadAppIcon()

@@ -53,7 +53,6 @@ import utils.loadImageBitmap
 import utils.openUrlInBrowser
 import utils.stringResource
 import viewmodel.MainViewModel
-import kotlin.system.exitProcess
 
 class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 

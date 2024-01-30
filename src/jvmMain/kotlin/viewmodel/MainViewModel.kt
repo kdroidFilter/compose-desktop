@@ -21,9 +21,7 @@ import data.implementation.TextScrapperImpl
 import data.implementation.VersionApiImpl
 import data.manager.PreferencesManager
 import data.model.AppVersion
-import data.model.ColorThemeModel
 import data.model.KofiPost
-import data.model.PaletteThemeMode
 import data.model.SnackbarEvent
 import data.model.WindowsPlacementModel
 import data.repository.ColorRepository
@@ -50,7 +48,6 @@ import utils.DarkModeDetector
 import utils.Localization
 import utils.TrustAllCertsHttpClient
 import utils.stringResource
-import kotlin.system.exitProcess
 
 class MainViewModel(
     private val localizationRepository: Localization,
