@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
@@ -59,10 +60,17 @@ class MainViewModel(
     private val versionReposition: VersionRepository,
     private val windowsPlacementRepository: WindowsPlacementRepository,
     private val textRepository: TextRepository,
-    private val settingsTabsRepository : SettingsTabsRepository
+    private val settingsTabsRepository : SettingsTabsRepository,
+    private val applicationScope: ApplicationScope
 ) : ViewModel() {
 
     val client = TrustAllCertsHttpClient.client
+
+    //EXIT MODE
+
+    fun exit() = applicationScope::exitApplication
+
+
 
     //FIRST CONFIG
     private val _wasConfig = MutableStateFlow(preferencesManager.wasConfig())
@@ -259,7 +267,7 @@ class MainViewModel(
         showSnackbar(
             stringResource("language_change_success_message"),
             actionLabel = stringResource("exit_action"),
-            action = { exitProcess(0) },
+            action = exit() ,
             duration = SnackbarDuration.Long
         )
     }

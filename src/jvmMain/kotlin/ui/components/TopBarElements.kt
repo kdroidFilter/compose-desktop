@@ -167,9 +167,8 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     @Composable
     fun ExitButton() {
         if (!vm.isNotFullScreen().collectAsState().value) {
-            IconButton(modifier = PointerModifier, onClick = {
-                exitProcess(0)
-            }) {
+            IconButton(modifier = PointerModifier, onClick = vm.exit()
+            ) {
                 Icon(Icons.Rounded.Close, null)
             }
         }

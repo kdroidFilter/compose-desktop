@@ -37,7 +37,7 @@ import java.util.Locale
 import kotlin.io.path.exists
 import kotlin.io.path.inputStream
 
-fun main() = application {
+fun main() = application() {
     val appIcon = loadAppIcon()
     val vm = MainViewModel(
         localizationRepository = Localization,
@@ -47,11 +47,12 @@ fun main() = application {
         windowsPlacementRepository = WindowsPlacementRepository,
         themeModeRepository = ThemeModeRepository,
         textRepository = TextRepository,
-        settingsTabsRepository = SettingsTabsRepository
+        settingsTabsRepository = SettingsTabsRepository,
+        applicationScope = this
     )
     Locale.setDefault(Locale(vm.getCurrentLanguage()))
     Window(
-        onCloseRequest = ::exitApplication,
+        onCloseRequest = vm.exit(),
         title = stringResource("app_name"),
         state = vm.windowsState,
         icon = appIcon,
