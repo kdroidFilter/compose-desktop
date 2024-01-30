@@ -64,7 +64,6 @@ class MainViewModel(
     val client = TrustAllCertsHttpClient.client
 
     //EXIT MODE
-
     fun exit() = applicationScope::exitApplication
 
 
