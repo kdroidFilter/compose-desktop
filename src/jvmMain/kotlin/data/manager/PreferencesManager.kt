@@ -36,6 +36,13 @@ object PreferencesManager {
         settings["windowsTheme"] = theme.text
     }
 
+    //ALWAYSONTOP
+
+    fun getAlwaysOnTopMode(): Boolean = settings.get<Boolean>("alwaysOnTop") ?: false
+    fun setAlwaysOnTopMode(value: Boolean) {
+        settings["alwaysOnTop"] = value
+    }
+
     //APP BAR MODE
     fun getAppBarMode(): String = settings.get<String>("appBarMode") ?: AppBarMode.MATERIAL3.name
     fun setAppBarMode(mode: String) {

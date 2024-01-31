@@ -123,6 +123,7 @@ fun BasicSettings(vm: MainViewModel) {
                 Column(Modifier.padding(start = 32.dp)) {
                     WindowsStateRadioButtons(vm)
                     ThemeModeSelection(vm)
+                    AlwaysOnTopButtonMode(vm)
                 }
                 Divider()
             }
@@ -416,5 +417,17 @@ fun WindowsThemeSelection(vm: MainViewModel) {
                 }
             }
         }
+    })
+}
+
+@Composable
+fun AlwaysOnTopButtonMode(vm: MainViewModel) {
+    AlignedRow({ RowLabel(stringResource("always_on_top_mode_switch_label")) }, {
+        val bool = vm.alwaysOnTopMode.collectAsState().value
+        Switch(
+            checked = bool, onCheckedChange = {
+                vm.setAlwaysOnTop(it)
+            }, modifier = PointerModifier
+        )
     })
 }

@@ -61,6 +61,7 @@ fun main() = application() {
         state = vm.windowsState,
         icon = appIcon,
         undecorated = vm.isMaterialWindows,
+        alwaysOnTop = vm.alwaysOnTopMode.value
 
     ) {
         window.minimumSize = Dimension(680,370)

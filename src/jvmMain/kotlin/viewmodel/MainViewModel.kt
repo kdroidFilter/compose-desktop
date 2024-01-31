@@ -1,11 +1,13 @@
 package viewmodel
 
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -107,6 +109,16 @@ class MainViewModel(
 
 
     fun getAllWindowsTheme() = WindowsTheme.entries
+
+    //ALWAYSONTOP
+
+    private val _alwaysOnTopMode = MutableStateFlow(preferencesManager.getAlwaysOnTopMode())
+    val alwaysOnTopMode = _alwaysOnTopMode.asStateFlow()
+    fun setAlwaysOnTop(value: Boolean) {
+        preferencesManager.setAlwaysOnTopMode(value)
+        _alwaysOnTopMode.value = value
+        restartAppSnackBar()
+    }
 
 
     //UPDATER SYSTEM
@@ -349,7 +361,6 @@ class MainViewModel(
             floating()
             isMaximised.value = false
         }
-
     }
 
 

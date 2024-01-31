@@ -222,7 +222,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     fun MaximixedButton() {
         if (!vm.isMaterialWindows || !vm.isNotFullScreen().collectAsState().value) return
         val icon = mutableStateOf(Icons.Rounded.Maximize)
-        if (vm.isMaximised.collectAsState().value) {
+        if (!vm.isMaximised.collectAsState().value) {
             icon.value = FontAwesomeIcons.Solid.WindowMaximize
         } else {
             icon.value = FontAwesomeIcons.Solid.WindowRestore
