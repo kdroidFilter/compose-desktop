@@ -1,13 +1,11 @@
 package viewmodel
 
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -45,14 +43,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import main
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 import utils.DarkModeDetector
 import utils.Localization
 import utils.TrustAllCertsHttpClient
 import utils.stringResource
-import java.lang.Thread.sleep
 
 class MainViewModel(
     private val localizationRepository: Localization,
@@ -70,7 +66,6 @@ class MainViewModel(
 
     //EXIT MODE
     fun exit() = applicationScope::exitApplication
-
 
     //FIRST CONFIG
     private val _wasConfig = MutableStateFlow(preferencesManager.wasConfig())
@@ -102,7 +97,7 @@ class MainViewModel(
     fun setWindowsTheme(theme : WindowsTheme) {
         preferencesManager.setWindowsTheme(theme)
         _currentTheme.value = theme.text
-        restartAppSnackBar()
+        restartToApplyChangesSnackBarMessage()
     }
 
     val isMaterialWindows = (_currentTheme.value == WindowsTheme.MATERIAL.text)
@@ -117,7 +112,7 @@ class MainViewModel(
     fun setAlwaysOnTop(value: Boolean) {
         preferencesManager.setAlwaysOnTopMode(value)
         _alwaysOnTopMode.value = value
-        restartAppSnackBar()
+        resetAppSuccessSnackBarMessage()
     }
 
 
@@ -188,9 +183,18 @@ class MainViewModel(
         action()
     }
 
-    fun restartAppSnackBar(){
+    fun resetAppSuccessSnackBarMessage(){
         showSnackbar(
             stringResource("reset_success_message"),
+            actionLabel = stringResource("exit_action"),
+            action = exit(),
+            duration = SnackbarDuration.Long
+        )
+    }
+
+    fun restartToApplyChangesSnackBarMessage(){
+        showSnackbar(
+            stringResource("restart_app_to_apply_changes"),
             actionLabel = stringResource("exit_action"),
             action = exit(),
             duration = SnackbarDuration.Long
