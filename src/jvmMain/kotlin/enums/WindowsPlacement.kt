@@ -6,7 +6,6 @@ enum class WindowsPlacementConfig(val property: String, val state : WindowPlacem
     FLOATING("floating", WindowPlacement.Floating),
     MAXIMIZED("maximized", WindowPlacement.Maximized),
     FULLSCREEN("fullscreen", WindowPlacement.Fullscreen);
-
     companion object {
         fun getPlacementByProperty(property: String): WindowPlacement? {
             return entries.firstOrNull { it.property.equals(property, ignoreCase = true) }?.state

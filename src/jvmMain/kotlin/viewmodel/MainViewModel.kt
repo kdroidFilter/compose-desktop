@@ -34,6 +34,7 @@ import enums.AppBarMode
 import enums.NavigationDestination
 import enums.ThemeMode
 import enums.WindowsPlacementConfig
+import enums.WindowsTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,12 +43,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import main
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 import utils.DarkModeDetector
 import utils.Localization
 import utils.TrustAllCertsHttpClient
 import utils.stringResource
+import java.lang.Thread.sleep
 
 class MainViewModel(
     private val localizationRepository: Localization,
@@ -57,7 +60,7 @@ class MainViewModel(
     private val versionReposition: VersionRepository,
     private val windowsPlacementRepository: WindowsPlacementRepository,
     private val textRepository: TextRepository,
-    private val settingsTabsRepository : SettingsTabsRepository,
+    private val settingsTabsRepository: SettingsTabsRepository,
     private val applicationScope: ApplicationScope
 ) : ViewModel() {
 
@@ -65,7 +68,6 @@ class MainViewModel(
 
     //EXIT MODE
     fun exit() = applicationScope::exitApplication
-
 
 
     //FIRST CONFIG
@@ -90,6 +92,23 @@ class MainViewModel(
         preferencesManager.saveName(_name.value)
     }
 
+    //WINDOWS THEME
+
+    private val _currentTheme = MutableStateFlow(preferencesManager.getWindowsTheme())
+    val currentTheme = _currentTheme.asStateFlow()
+
+    fun setWindowsTheme(theme : WindowsTheme) {
+        preferencesManager.setWindowsTheme(theme)
+        _currentTheme.value = theme.text
+        restartAppSnackBar()
+    }
+
+    val isMaterialWindows = (_currentTheme.value == WindowsTheme.MATERIAL.text)
+
+
+    fun getAllWindowsTheme() = WindowsTheme.entries
+
+
     //UPDATER SYSTEM
     val currentVersion = versionReposition.getCurrentVersion()
     private val _isUpdateRequired = mutableStateOf(false)
@@ -102,7 +121,7 @@ class MainViewModel(
         val versionApi: VersionApi = VersionApiImpl(client)
         viewModelScope.launch(Dispatchers.IO) {
             try {
-           //     if (currentVersion == "debug") return@launch
+                //     if (currentVersion == "debug") return@launch
                 val latestVersion = versionApi.getCurrentVersion()
                 if (latestVersion.version == "N/A") return@launch
                 _isUpdateRequired.value = currentVersion != latestVersion.version
@@ -157,6 +176,15 @@ class MainViewModel(
         action()
     }
 
+    fun restartAppSnackBar(){
+        showSnackbar(
+            stringResource("reset_success_message"),
+            actionLabel = stringResource("exit_action"),
+            action = exit(),
+            duration = SnackbarDuration.Long
+        )
+    }
+
     //APPBAR TITLE
     private var _appBarTitle = MutableStateFlow(stringResource("app_name"))
     val appBarTitle = _appBarTitle.asStateFlow()
@@ -201,7 +229,11 @@ class MainViewModel(
 
     private val _isMaterial3 = _appBarMode
         .map { mode -> mode == AppBarMode.MATERIAL3.name }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), _appBarMode.value == AppBarMode.MATERIAL3.name)
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(),
+            _appBarMode.value == AppBarMode.MATERIAL3.name
+        )
 
     val isMaterial3: StateFlow<Boolean> = _isMaterial3
 
@@ -210,7 +242,7 @@ class MainViewModel(
     private fun useDarKTheme() =
         themeModeRepository.useDarKTheme(preferencesManager.getCurrentTheme())
 
-    private var _useDarkTheme = MutableStateFlow(  useDarKTheme())
+    private var _useDarkTheme = MutableStateFlow(useDarKTheme())
     val useDarkTheme = _useDarkTheme.asStateFlow()
     fun setTheme(theme: String) {
         preferencesManager.setTheme(theme)
@@ -253,17 +285,17 @@ class MainViewModel(
     // LANGUAGE FUNCTION
     private var _isRtl = localizationRepository.isCurrentLanguageRtl()
     fun isCurrentLanguageRtl() = _isRtl
-    private var _currentLanguage = localizationRepository.currentLanguageCode()
-    fun getCurrentLanguage(): String = _currentLanguage
+    private var _currentLanguage = MutableStateFlow( localizationRepository.currentLanguageCode())
+    val currentLanguage = _currentLanguage.asStateFlow()
     fun getCurrentLanguageName() = localizationRepository.currentLanguage()!!.name
     fun changeLanguage(key: String) {
         localizationRepository.setLanguage(key)
-        _currentLanguage = localizationRepository.currentLanguageCode()
+        _currentLanguage.value = localizationRepository.currentLanguageCode()
         preferencesManager.setLanguage(key)
         showSnackbar(
             stringResource("language_change_success_message"),
             actionLabel = stringResource("exit_action"),
-            action = exit() ,
+            action = exit(),
             duration = SnackbarDuration.Long
         )
     }
@@ -272,7 +304,7 @@ class MainViewModel(
     fun getWindowsPlacements(): List<WindowsPlacementModel> =
         windowsPlacementRepository.getWindowsPlacements()
 
-    private var _windowsPlacement by mutableStateOf(
+    private var _windowsPlacement = MutableStateFlow(
         WindowsPlacementConfig.getPlacementByProperty(
             preferencesManager.getWindowPlacementConfig()
         ) ?: WindowPlacement.Floating
@@ -287,14 +319,39 @@ class MainViewModel(
         )
     }
 
-    private val _windowsState = WindowState(
-        placement = _windowsPlacement,
+    private val _windowsState =  WindowState(
+        placement = _windowsPlacement.value,
         position = WindowPosition.Aligned(Alignment.Center),
-        size = DpSize(1280.dp, 720.dp)
-    )
+        size = DpSize(1280.dp, 720.dp
+    ))
     val windowsState = _windowsState
     private var _windowsPlacementToggle =
-    MutableStateFlow(WindowsPlacementConfig.getPropertyByPlacement(_windowsPlacement) != WindowsPlacementConfig.FULLSCREEN.property)
+        MutableStateFlow(WindowsPlacementConfig.getPropertyByPlacement(_windowsPlacement.value) != WindowsPlacementConfig.FULLSCREEN.property)
+
+    //MINIMIZED WINDOWS
+    fun minimized(){
+        _windowsState.isMinimized = !_windowsState.isMinimized
+    }
+    fun maximixed(){
+        _windowsState.placement  = WindowPlacement.Maximized
+    }
+    fun floating(){
+        _windowsState.placement  = WindowPlacement.Floating
+    }
+
+    val isMaximised = MutableStateFlow( _windowsPlacement.value == WindowPlacement.Maximized)
+
+    fun toggleMaximixed(){
+        if (!isMaximised.value){
+            maximixed()
+            isMaximised.value = true
+        }else {
+            floating()
+            isMaximised.value = false
+        }
+
+    }
+
 
     //FULLSCREEN TOGGLE
     fun toggleFullScreen() {
@@ -382,7 +439,7 @@ class MainViewModel(
     fun getLicense() = textRepository.getLicense
 
     init {
-      //  if(!wasConfig.value) checkForUpdates()
+        //  if(!wasConfig.value) checkForUpdates()
         kofiPostFetcher()
         textFetcher(textRepository.readmeUrl, "readmeOffline", _readme)
     }

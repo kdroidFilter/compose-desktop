@@ -7,6 +7,7 @@ import com.russhwolf.settings.set
 import enums.AppBarMode
 import enums.ThemeMode
 import enums.WindowsPlacementConfig
+import enums.WindowsTheme
 import java.util.prefs.Preferences
 
 object PreferencesManager {
@@ -27,6 +28,13 @@ object PreferencesManager {
     }
 
     fun getName() = settings.get<String>("name") ?: ""
+
+
+    //WINDOWS THEME
+    fun getWindowsTheme(): String = settings.get<String>("windowsTheme") ?: WindowsTheme.SYSTEM.text
+    fun setWindowsTheme(theme: WindowsTheme) {
+        settings["windowsTheme"] = theme.text
+    }
 
     //APP BAR MODE
     fun getAppBarMode(): String = settings.get<String>("appBarMode") ?: AppBarMode.MATERIAL3.name

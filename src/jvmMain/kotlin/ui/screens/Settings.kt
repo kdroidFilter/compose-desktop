@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,7 +31,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -61,7 +59,6 @@ import ui.components.SubTitle
 import utils.Localization
 import utils.stringResource
 import viewmodel.MainViewModel
-import kotlin.system.exitProcess
 
 
 @Composable
@@ -133,6 +130,7 @@ fun BasicSettings(vm: MainViewModel) {
                 AlignedRowSpacer()
                 SubTitle(stringResource("user_interface_appearance_label"))
                 Column(Modifier.padding(start = 32.dp)) {
+                    WindowsThemeSelection(vm)
                     ColorSelection(vm)
                     PaletteSelection(vm)
                     AppBarModeSelection(vm)
@@ -204,12 +202,7 @@ fun ClearSettingsButton(vm: MainViewModel) {
     ) {
         Button({
             vm.clearSettings()
-            vm.showSnackbar(
-                stringResource("reset_success_message"),
-                actionLabel = stringResource("exit_action"),
-                action = { exitProcess(0) },
-                duration = SnackbarDuration.Long
-            )
+            vm.restartAppSnackBar()
         }, modifier = PointerModifier) { Text(stringResource("reset_settings_button")) }
     }
 }
@@ -287,7 +280,7 @@ fun LanguageButton(vm: MainViewModel) {
                             language.name,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth(),
-                            fontWeight = if (language.code == vm.getCurrentLanguage()) FontWeight.ExtraBold else FontWeight.Normal,
+                            fontWeight = if (language.code == vm.currentLanguage.collectAsState().value) FontWeight.ExtraBold else FontWeight.Normal,
                         )
                     }, onClick = {
                         vm.changeLanguage(language.code)
@@ -394,5 +387,34 @@ fun FeedSwitchButton(vm: MainViewModel) {
                 vm.setFeedSwitch(it)
             }, modifier = PointerModifier
         )
+    })
+}
+
+@Composable
+fun WindowsThemeSelection(vm: MainViewModel) {
+    AlignedRow({ RowLabel(stringResource("select_windowstheme_style_label")) }, {
+        var isOpened by remember { mutableStateOf(false) }
+        var selectedMode = vm.currentTheme.collectAsState().value
+
+        Box {
+            TextButton({ isOpened = true }, modifier = PointerModifier) {
+                Text(selectedMode)
+            }
+            DropdownMenu(expanded = isOpened, onDismissRequest = { isOpened = !isOpened }) {
+
+                vm.getAllWindowsTheme().forEach { mode ->
+                    DropdownMenuItem(text = {
+                        Text(
+                            text = mode.text,
+                            fontWeight = if (mode.text == vm.currentTheme.collectAsState().value) FontWeight.Bold else FontWeight.Normal
+                        )
+                    }, onClick = {
+                        selectedMode = mode.text
+                        vm.setWindowsTheme(mode)
+                        isOpened = false
+                    })
+                }
+            }
+        }
     })
 }

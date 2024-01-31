@@ -1,12 +1,16 @@
 package ui.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowForward
@@ -16,6 +20,8 @@ import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.Fullscreen
 import androidx.compose.material.icons.rounded.FullscreenExit
 import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.Maximize
+import androidx.compose.material.icons.rounded.Minimize
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.SystemUpdateAlt
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -35,6 +41,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -44,6 +51,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.WindowMaximize
+import compose.icons.fontawesomeicons.solid.WindowRestore
 import enums.NavigationDestination
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -56,6 +67,13 @@ import viewmodel.MainViewModel
 
 class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
+    val littleIconModifier = Modifier.height(16.dp).padding(2.dp)
+    val iconButtonModifier = PointerModifier.height(20.dp).width(22.dp)
+
+    val bigIconModifier = Modifier.height(22.dp)
+    val bigIconButtonModifier = PointerModifier.height(28.dp)
+
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun TopBar() {
@@ -67,14 +85,28 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
         )
         val material3 = TopAppBarDefaults.centerAlignedTopAppBarColors()
         CenterAlignedTopAppBar(title = {
-            Text(vm.appBarTitle.collectAsState().value, modifier = Modifier.padding(start = 64.dp))
+            Text(
+                vm.appBarTitle.collectAsState().value,
+                modifier = Modifier.padding(start = 64.dp)
+            )
         }, navigationIcon = { HomeButton(vm) }, actions = {
-            UpdateButton()
-            KofiPostButton(vm.kofiPosts)
-            FullScreenButton()
-            DarkThemeButton()
-            VerticalButton()
-            ExitButton()
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.End,
+            ) {
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    MinimizedButton()
+                    MaximixedButton()
+                    ExitButton()
+                }
+                Row {
+                    UpdateButton()
+                    KofiPostButton(vm.kofiPosts)
+                    DarkThemeButton()
+                    FullScreenButton()
+                    VerticalButton()
+                }
+            }
         }, colors = if (vm.isMaterial3.collectAsState().value) material3 else material2
         )
     }
@@ -82,9 +114,11 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     @Composable
     fun DarkThemeButton() {
         if (!vm.darkModeSwitch.collectAsState().value) return
-        IconButton(onClick = { vm.toggleTheme() }, modifier = PointerModifier) {
+        IconButton(onClick = { vm.toggleTheme() }, modifier = bigIconButtonModifier) {
             Icon(
-                if (vm.useDarkTheme.collectAsState().value) Icons.Rounded.LightMode else Icons.Rounded.DarkMode, null
+                if (vm.useDarkTheme.collectAsState().value) Icons.Rounded.LightMode else Icons.Rounded.DarkMode,
+                null,
+                bigIconModifier
             )
         }
     }
@@ -92,10 +126,13 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     @Composable
     fun FullScreenButton() {
         val icon =
-            if (vm.isNotFullScreen().collectAsState().value) Icons.Rounded.Fullscreen else Icons.Rounded.FullscreenExit
-        IconButton(modifier = PointerModifier, onClick = { vm.toggleFullScreen() }) {
+            if (vm.isNotFullScreen()
+                    .collectAsState().value
+            ) Icons.Rounded.Fullscreen else Icons.Rounded.FullscreenExit
+        IconButton(modifier = bigIconButtonModifier, onClick = { vm.toggleFullScreen() }) {
             Icon(
-                imageVector = icon, null
+                imageVector = icon, null,
+                bigIconModifier
             )
         }
     }
@@ -104,33 +141,36 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     @Composable
     fun HomeButton(vm: MainViewModel) {
         val isRtl = vm.isCurrentLanguageRtl()
+        val iconModifier = Modifier.height(22.dp)
         val canGoBack =
             navigator.canGoBack.collectAsState(false).value && vm.currentRoute.collectAsState().value != NavigationDestination.Home.route
         val isLoading = vm.isLoading.collectAsState(false).value
         val backIcon = if (!isRtl) Icons.Rounded.ArrowBack else Icons.Rounded.ArrowForward
-        val modifier = Modifier.size(24.dp)
         val contentDescription = stringResource("app_name")
         IconButton(
-            modifier = if (canGoBack) PointerModifier else Modifier,
+            modifier = if (canGoBack) bigIconButtonModifier else iconModifier,
             onClick = { if (canGoBack) navigator.goBack() }) {
             when {
                 isLoading -> {
                     CircularProgressIndicator(
-                        modifier = modifier
+                        modifier = iconModifier
                     )
                 }
+
                 canGoBack -> {
                     Icon(
                         imageVector = backIcon,
                         contentDescription = contentDescription,
-                        modifier = modifier
+                        modifier = iconModifier
+
                     )
                 }
+
                 else -> {
                     Icon(
                         painterResource("AppIcon.png"),
                         contentDescription = contentDescription,
-                        modifier = modifier
+                        modifier = iconModifier
                     )
                 }
             }
@@ -142,7 +182,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
     fun VerticalButton() {
         var isOpened by remember { mutableStateOf(false) }
         Box {
-            IconButton(modifier = PointerModifier, onClick = {
+            IconButton(modifier = bigIconButtonModifier, onClick = {
                 isOpened = true
             }) { Icon(imageVector = Icons.Rounded.MoreVert, null) }
             DropdownMenu(expanded = isOpened, onDismissRequest = { isOpened = !isOpened }) {
@@ -151,8 +191,12 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
                     val isSelected = item.route == vm.currentRoute.collectAsState().value
                     DropdownMenuItem(modifier = PointerModifier, text = {
                         Row {
-                            Icon(imageVector = item.icon!!, contentDescription = item.name)
-                            Text(item.title, Modifier.padding(start = 4.dp), fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal )
+                            Icon(imageVector = item.icon!!, contentDescription = item.name, bigIconButtonModifier)
+                            Text(
+                                item.title,
+                                Modifier.padding(start = 4.dp),
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                            )
                         }
                     }, onClick = {
                         navigator.navigate(item.route)
@@ -165,12 +209,35 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun ExitButton() {
-        if (!vm.isNotFullScreen().collectAsState().value) {
-            IconButton(modifier = PointerModifier, onClick = vm.exit()
+        if (!vm.isNotFullScreen().collectAsState().value || vm.isMaterialWindows) {
+            IconButton(
+                modifier = iconButtonModifier, onClick = vm.exit()
             ) {
-                Icon(Icons.Rounded.Close, null)
+                Icon(Icons.Rounded.Close, null, littleIconModifier)
             }
         }
+    }
+
+    @Composable
+    fun MaximixedButton() {
+        if (!vm.isMaterialWindows || !vm.isNotFullScreen().collectAsState().value) return
+        val icon = mutableStateOf(Icons.Rounded.Maximize)
+        if (vm.isMaximised.collectAsState().value) {
+            icon.value = FontAwesomeIcons.Solid.WindowMaximize
+        } else {
+            icon.value = FontAwesomeIcons.Solid.WindowRestore
+        }
+        IconButton(modifier = iconButtonModifier, onClick = { vm.toggleMaximixed() }
+        ) { AutoRtlIcon(vm, icon.value, null, modifier = littleIconModifier) }
+    }
+
+    @Composable
+    fun MinimizedButton() {
+        if (!vm.isMaterialWindows || !vm.isNotFullScreen().collectAsState().value) return
+            IconButton(modifier = iconButtonModifier, onClick = { vm.minimized() }
+            ) {
+                Icon(Icons.Rounded.Minimize, null, littleIconModifier)
+            }
     }
 
     @Composable
@@ -184,20 +251,22 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun KofiPostButton(posts: List<data.model.KofiPost>) {
-        if(!vm.feedSwitch.collectAsState().value) return
+        if (!vm.feedSwitch.collectAsState().value) return
         var expanded by remember { mutableStateOf(false) }
 
         Box {
             // Bouton pour ouvrir/fermer le menu déroulant
-            IconButton(onClick = {
-                expanded = !expanded
-                if (posts.isEmpty()) {
-                    vm.showSnackbar(stringResource("error_not_internet_connection"))
-                    vm.kofiPostFetcher()
-                }
-            },
-                modifier = PointerModifier) {
-                Icon(Icons.Rounded.Campaign, contentDescription = "Localized description")
+            IconButton(
+                onClick = {
+                    expanded = !expanded
+                    if (posts.isEmpty()) {
+                        vm.showSnackbar(stringResource("error_not_internet_connection"))
+                        vm.kofiPostFetcher()
+                    }
+                },
+                modifier = bigIconButtonModifier
+            ) {
+                Icon(Icons.Rounded.Campaign, contentDescription = "Localized description", bigIconModifier)
             }
 
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -211,8 +280,17 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
                             onClick = { openUrlInBrowser("https://ko-fi.com/" + post.postUrl) },
                             text = {
                                 Column(modifier = Modifier.padding(16.dp)) {
-                                    Text(text = post.postTitle, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyLarge)
-                                    Text(text = post.timeAgo, textAlign = TextAlign.End, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodySmall)
+                                    Text(
+                                        text = post.postTitle,
+                                        fontWeight = FontWeight.Bold,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Text(
+                                        text = post.timeAgo,
+                                        textAlign = TextAlign.End,
+                                        modifier = Modifier.fillMaxWidth(),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
                                 }
                             },
                             leadingIcon = {

@@ -10,14 +10,17 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.res.loadImageBitmap
@@ -28,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import utils.openUrlInBrowser
+import viewmodel.MainViewModel
 import java.awt.Cursor
 import java.nio.file.Paths
 import kotlin.io.path.exists
@@ -108,6 +112,17 @@ fun InfoContainer(text: String, background: Color = MaterialTheme.colorScheme.te
             textAlign = TextAlign.Justify
         )
     }
+}
+
+@Composable
+fun AutoRtlIcon(vm: MainViewModel, icon: ImageVector, contentDescription: String?, modifier: Modifier) {
+    Icon(
+        imageVector = icon,
+        contentDescription = contentDescription,
+        modifier = modifier.graphicsLayer {
+            rotationZ = if (vm.isCurrentLanguageRtl()) 180f else 0f
+        }
+    )
 }
 
 
