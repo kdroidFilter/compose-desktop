@@ -203,7 +203,7 @@ fun ClearSettingsButton(vm: MainViewModel) {
     ) {
         Button({
             vm.clearSettings()
-            vm.restartAppSnackBar()
+            vm.resetAppSuccessSnackBarMessage()
         }, modifier = PointerModifier) { Text(stringResource("reset_settings_button")) }
     }
 }

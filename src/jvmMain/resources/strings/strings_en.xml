@@ -40,8 +40,9 @@
     <string name="contact_confirmation_title">Message Sent</string>
     <string name="contact_confirmation_message">Your message has been successfully sent</string>
 
-    <!--SnackBar Action -->
+    <!--SnackBar -->
     <string name="exit_action">Exit app</string>
+    <string name="restart_app_to_apply_changes">Please restart the application to apply changes.</string>
 
     <!--SETTINGS PAGE -->
     <string name="settings_title">Settings</string>
@@ -62,11 +63,18 @@
     <string name="window_placement_maximized_label">Maximized</string>
     <string name="window_placement_fullscreen_label">Fullscreen</string>
 
+    <!--- Sub-Category: AlwaysOn Mode Options -->
+    <string name="always_on_top_mode_switch_label">Always on Top</string>
+
+
     <!--- Sub-Category: Dark/Light Theme Mode -->
     <string name="select_theme_mode_label">Choose between Dark and Light Mode</string>
     <string name="light_mode">Light Mode</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="auto_mode">Auto</string>
+
+    <!--- Sub-Category: Window Theme Mode -->
+    <string name="select_windowstheme_style_label">Select Window Theme</string>
 
     <!--= Sub-Category: Theme Color Adjustments -->
     <string name="select_theme_color_label">Select a Color for the Theme</string>

@@ -40,8 +40,9 @@
     <string name="contact_confirmation_title">Message Envoyé</string>
     <string name="contact_confirmation_message">Votre message a bien été envoyé</string>
 
-    <!--SnackBar Action -->
+    <!--SnackBar -->
     <string name="exit_action">Quitter l'application</string>
+    <string name="restart_app_to_apply_changes">Veuillez redémarrer l'application pour que les modifications soient prises en compte.</string>
 
     <!--SETTINGS PAGE -->
     <string name="settings_title">Réglages</string>
@@ -63,11 +64,17 @@
     <string name="window_placement_maximized_label">Maximisée</string>
     <string name="window_placement_fullscreen_label">Plein Écran</string>
 
+    <!--- Sub-Category: AlwaysOn Mode Options -->
+    <string name="always_on_top_mode_switch_label">Toujours en premier plan</string>
+
     <!--- Sub-Category: Dark/Light Theme Mode -->
     <string name="select_theme_mode_label">Choisir entre le mode sombre et le mode clair</string>
     <string name="light_mode">Mode Clair</string>
     <string name="dark_mode">Mode Sombre</string>
     <string name="auto_mode">Automatique</string>
+
+    <!--- Sub-Category: Window Theme Mode -->
+    <string name="select_windowstheme_style_label">Sélectionner le thème de la fenêtre</string>
 
     <!--- Sub-Category: Theme Color Adjustments -->
     <string name="select_theme_color_label">Choisir une couleur pour le thème</string>

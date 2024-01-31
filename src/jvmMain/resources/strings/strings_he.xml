@@ -40,8 +40,9 @@
     <string name="contact_confirmation_title">ההודעה נשלחה</string>
     <string name="contact_confirmation_message">ההודעה נשלחה בהצלחה</string>
 
-    <!--SnackBar Action -->
+    <!--SnackBar -->
     <string name="exit_action">יציאה מהתוכנה</string>
+    <string name="restart_app_to_apply_changes">אנא הפעל מחדש את היישום כדי ליישם את השינויים.</string>
 
     <!--SETTINGS PAGE -->
     <string name="settings_title">הגדרות</string>
@@ -62,11 +63,17 @@
     <string name="window_placement_maximized_label">מוגדל</string>
     <string name="window_placement_fullscreen_label">מסך מלא</string>
 
+    <!--- Sub-Category: AlwaysOn Mode Options -->
+    <string name="always_on_top_mode_switch_label">תמיד בחלק העליון</string>
+
     <!--- Sub-Category: Dark/Light Theme Mode -->
     <string name="select_theme_mode_label">בחר בין מצב כהה למצב בהיר</string>
     <string name="light_mode">מצב בהיר</string>
     <string name="dark_mode">מצב כהה</string>
     <string name="auto_mode">אוטומטי</string>
+
+    <!--- Sub-Category: Window Theme Mode -->
+    <string name="select_windowstheme_style_label">בחר ערכת נושא לחלונות</string>
 
     <!-- Sub-Category: Theme Color Adjustments -->
     <string name="select_theme_color_label">בחר צבע לערכת הנושא</string>
