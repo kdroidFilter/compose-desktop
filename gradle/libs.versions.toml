@@ -18,12 +18,13 @@ notify = "4.4"
 jsystemThemeDetector = "3.6"
 logback = "1.4.11"
 pdfReader = "1.0.0"
-
 # Miscellaneous Libraries
 jsoup = "1.17.2"
 materialKolor = "1.3.0"
 mpfilepicker = "3.1.0"
-
+# Database Libraries
+sqldelight = "2.0.1"
+sqlitejdbc = "3.45.1.0"
 
 [libraries]
 # Kotlin
@@ -49,7 +50,12 @@ pdfReader = {module = "dev.zt64:compose-pdf-desktop", version.ref = "pdfReader"}
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 mpfilepicker = { module = "com.darkrockstudios:mpfilepicker", version.ref = "mpfilepicker" }
+# Database Libraries
+sqldelight-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlitejdbc" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+sqldelightPlugin = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+kotlinSerializationPlugin = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

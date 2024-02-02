@@ -4,12 +4,14 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization") version libs.versions.kotlin.get()
     id("org.jetbrains.compose")
     id("dev.hydraulic.conveyor") version "1.6"
+    id("app.cash.sqldelight") version libs.versions.sqldelight.get()
 }
 
 group = "io.github.kdroidFilter.compose-desktop"
-version = "0.1.4"
+version = "0.1.9"
 
 repositories {
     mavenCentral()
@@ -57,15 +59,29 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.gson)
 
-
                 // Miscellaneous Libraries
                 implementation(libs.jsoup)
                 implementation(libs.materialKolor)
                 implementation(libs.mpfilepicker)
         //        implementation(libs.pdfReader)
 
+                //Database Librairies
+                implementation(libs.sqldelight.driver)
+                implementation(libs.sqlite.jdbc)
             }
         }
+    }
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("notes")
+            srcDirs.setFrom("src/jvmMain/sqldelight")
+            schemaOutputDirectory.set(file("src/jvmMain/sqldelight/queries"))
+
+        }
+        linkSqlite.set(true)
     }
 }
 
@@ -82,6 +98,9 @@ compose.desktop {
         mainClass = "MainKt"
         buildTypes.release.proguard {
             configurationFiles.from(project.file("root-config.pro"))
+        }
+        nativeDistributions{
+            appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
         }
     }
 }
