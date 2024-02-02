@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -152,8 +153,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
             onClick = { if (canGoBack) navigator.goBack() }) {
             when {
                 isLoading -> {
-                    CircularProgressIndicator(
-                        modifier = iconModifier
+                    CircularProgressIndicator(Modifier.size(22.dp)
                     )
                 }
 

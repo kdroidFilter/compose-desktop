@@ -22,6 +22,7 @@ import androidx.compose.ui.window.application
 import com.example.compose.App
 import data.manager.PreferencesManager
 import data.repository.ColorRepository
+import data.repository.NotesDatabaseRepository
 import data.repository.SettingsTabsRepository
 import data.repository.TextRepository
 import data.repository.ThemeModeRepository
@@ -38,6 +39,7 @@ import utils.Localization
 import utils.SnackBarDisplayer
 import utils.stringResource
 import viewmodel.MainViewModel
+import viewmodel.NotesViewModel
 import java.awt.Dimension
 import java.util.Locale
 
@@ -55,6 +57,9 @@ fun main() = application() {
         applicationScope = this
     )
     Locale.setDefault(Locale(vm.currentLanguage.value))
+
+    val notesViewModel = NotesViewModel(NotesDatabaseRepository)
+
     Window(
         onCloseRequest = vm.exit(),
         title = stringResource("app_name"),
@@ -77,7 +82,7 @@ fun main() = application() {
                 Surface(
                     Modifier.padding(paddingValues).padding(16.dp).fillMaxSize()
                 ) {
-                    NavGraph(vm, navigator)
+                    NavGraph(vm, navigator, notesViewModel)
                     UpdaterDialog(vm)
                 }
             }

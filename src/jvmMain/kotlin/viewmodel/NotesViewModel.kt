@@ -24,6 +24,7 @@ class NotesViewModel(val repository : NotesDatabaseRepository): ViewModel() {
     fun addNote(note: Notes) {
         repository.addNote(note)
         _notes.value = repository.getAllNotes()
+        hideDialog() // Cachez le dialogue après l'ajout de la note.
     }
 
     fun removeNote(note: Notes) {

@@ -29,13 +29,15 @@ object NotesDatabaseRepository {
     }
 
     fun updateNote(note: Notes) {
+        val currentTime = System.currentTimeMillis() / 1000
         database.notesQueries.updateNote(
             title = note.title,
             content = note.content,
-            creationTime = note.creationTime,
+            creationTime = currentTime,
             noteId = note.noteId
         )
     }
+
 
     fun removeNote(note: Notes) {
         database.notesQueries.deleteNote(

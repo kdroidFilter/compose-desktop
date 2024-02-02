@@ -14,10 +14,11 @@ import ui.screens.Settings
 import ui.screens.contact.ContactConfirmation
 import ui.screens.contact.ContactHome
 import viewmodel.MainViewModel
+import viewmodel.NotesViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NavGraph(vm: MainViewModel, navigator: Navigator) {
+fun NavGraph(vm: MainViewModel, navigator: Navigator, notesViewModel: NotesViewModel) {
     Row {
         NavRail(vm, navigator)
         NavHost(
@@ -29,7 +30,7 @@ fun NavGraph(vm: MainViewModel, navigator: Navigator) {
                 scene(destination.route) {
                     when (destination) {
                         NavigationDestination.FirstConfig -> FirstConfig(vm, navigator)
-                        NavigationDestination.Home -> Home(vm, navigator)
+                        NavigationDestination.Home -> Home(vm, notesViewModel, navigator)
                         NavigationDestination.About -> About(vm)
                         NavigationDestination.Contact -> ContactHome(vm, navigator)
                         NavigationDestination.ContactConfirmation -> ContactConfirmation()
