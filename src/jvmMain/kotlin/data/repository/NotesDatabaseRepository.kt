@@ -3,13 +3,43 @@ package data.repository
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import notes.Database
+import queries.notes.Notes
 import utils.getRessourcePath
 
 object NotesDatabaseRepository {
     val path = getRessourcePath(true) + "/database.db"
     val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:$path")
+
     init {
         Database.Schema.create(driver)
     }
-    val database = Database(driver)
+
+    private val database = Database(driver)
+
+    fun getAllNotes(): List<Notes> {
+        return database.notesQueries.selectAllNotes().executeAsList()
+    }
+
+    fun addNote(note: Notes) {
+        database.notesQueries.insertNote(
+            title = note.title,
+            content = note.content,
+            creationTime = note.creationTime
+        )
+    }
+
+    fun updateNote(note: Notes) {
+        database.notesQueries.updateNote(
+            title = note.title,
+            content = note.content,
+            creationTime = note.creationTime,
+            noteId = note.noteId
+        )
+    }
+
+    fun removeNote(note: Notes) {
+        database.notesQueries.deleteNote(
+            noteId = note.noteId
+        )
+    }
 }

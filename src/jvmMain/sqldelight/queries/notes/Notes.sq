@@ -25,3 +25,7 @@ deleteNote:
 DELETE FROM notes
 WHERE noteId = ?;
 
+searchNote:
+SELECT * FROM notes
+WHERE title LIKE '%' || ? || '%'
+OR content LIKE '%' || ? || '%';
