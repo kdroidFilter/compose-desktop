@@ -40,10 +40,14 @@ import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.viewmodel.viewModel
 import queries.notes.Notes
 import ui.components.PointerModifier
+import utils.OsDetector
 import utils.stringResource
 import utils.unixToDateString
 import viewmodel.MainViewModel
 import viewmodel.NotesViewModel
+import java.awt.Toolkit
+import java.io.File
+import java.util.UUID
 
 
 @Composable
@@ -219,3 +223,4 @@ fun EditNoteDialog(note: Notes, vm: NotesViewModel, onDismiss: () -> Unit) {
         }
     }
 }
+

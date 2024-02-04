@@ -4,10 +4,12 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import notes.Database
 import queries.notes.Notes
+import utils.getApplicationStoragePath
 import utils.getRessourcePath
 
 object NotesDatabaseRepository {
-    val path = getRessourcePath(true) + "/database.db"
+    // ReadOnly database val path = getRessourcePath(true) + "/database.db"
+    val path = getApplicationStoragePath("compose-desktop") + "/database.db"
     val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:$path")
 
     init {

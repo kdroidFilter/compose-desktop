@@ -41,3 +41,20 @@ fun getRessourcePath(isCommon: Boolean = true): String {
     } ?: ((System.getProperty("user.dir")) + "/resources/$tempOsPath")
     return resourcesDir
 }
+
+fun getApplicationStoragePath(applicationName: String): String {
+    val osName = OsDetector
+    val userHome = System.getProperty("user.home")
+    val storagePath: String
+
+    storagePath = when {
+        osName.isWindows() -> { System.getenv("APPDATA") + "\\" + applicationName }
+        osName.isMac()-> { "$userHome/Library/Application Support/$applicationName" }
+        osName.isLinux() -> { "$userHome/.local/share/$applicationName" }
+        else -> { "$userHome/$applicationName" }
+    }
+    // Créer le dossier s'il n'existe pas déjà
+    File(storagePath).mkdirs()
+
+    return storagePath
+}
