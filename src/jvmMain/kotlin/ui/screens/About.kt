@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Github
+import moe.tlaster.precompose.koin.koinViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import ui.components.InfoContainer
@@ -39,7 +40,8 @@ import viewmodel.MainViewModel
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun About(vm: MainViewModel) {
+fun About() {
+    val vm: MainViewModel = koinViewModel()
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Column(
             modifier = Modifier.fillMaxSize().padding(start = 32.dp, end = 32.dp),

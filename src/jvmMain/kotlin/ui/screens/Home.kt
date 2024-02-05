@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindow
 import data.repository.NotesDatabaseRepository
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.stateholder.StateHolder
 import moe.tlaster.precompose.viewmodel.viewModel
@@ -52,7 +53,9 @@ import java.util.UUID
 
 
 @Composable
-fun Home(mainViewModel: MainViewModel, vm: NotesViewModel, navigator: Navigator) {
+fun Home( vm: NotesViewModel) {
+    val mainViewModel: MainViewModel = koinViewModel()
+
     val notesList = vm.notes.collectAsState().value
     val isAdding = vm.isAdding.collectAsState().value
 

@@ -8,6 +8,7 @@ import data.repository.TextRepository
 import data.repository.ThemeModeRepository
 import data.repository.VersionRepository
 import data.repository.WindowsPlacementRepository
+import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.stateholder.SavedStateHolder
 import org.koin.dsl.module
 import utils.Localization
@@ -26,7 +27,7 @@ object AppModule {
         single { SettingsTabsRepository }
 
         // Définir MainViewModel
-        factory { (applicationScope: ApplicationScope) ->
+        single { (applicationScope: ApplicationScope) ->
             MainViewModel(
                 localizationRepository = get(),
                 preferencesManager = get(),
@@ -38,6 +39,12 @@ object AppModule {
                 settingsTabsRepository = get(),
                 applicationScope = applicationScope
             )
+        }
+    }
+
+    val navigatorModule = module {
+        single {
+            Navigator()
         }
     }
 }

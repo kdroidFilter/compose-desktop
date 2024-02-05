@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import enums.NavigationDestination
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
+import org.koin.compose.getKoin
 import ui.screens.About
 import ui.screens.FirstConfig
 import ui.screens.Home
@@ -18,7 +20,9 @@ import viewmodel.NotesViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NavGraph(vm: MainViewModel, navigator: Navigator, notesViewModel: NotesViewModel) {
+fun NavGraph(notesViewModel: NotesViewModel) {
+    val vm: MainViewModel = koinViewModel()
+    val navigator: Navigator = getKoin().get()
     Row {
         NavRail(vm, navigator)
         NavHost(
@@ -29,13 +33,13 @@ fun NavGraph(vm: MainViewModel, navigator: Navigator, notesViewModel: NotesViewM
             NavigationDestination.entries.forEach { destination ->
                 scene(destination.route) {
                     when (destination) {
-                        NavigationDestination.FirstConfig -> FirstConfig(vm, navigator)
-                        NavigationDestination.Home -> Home(vm, notesViewModel, navigator)
-                        NavigationDestination.About -> About(vm)
-                        NavigationDestination.Contact -> ContactHome(vm, navigator)
+                        NavigationDestination.FirstConfig -> FirstConfig()
+                        NavigationDestination.Home -> Home( notesViewModel)
+                        NavigationDestination.About -> About()
+                        NavigationDestination.Contact -> ContactHome()
                         NavigationDestination.ContactConfirmation -> ContactConfirmation()
-                        NavigationDestination.Settings -> Settings(vm)
-                        NavigationDestination.License -> License(vm)
+                        NavigationDestination.Settings -> Settings()
+                        NavigationDestination.License -> License()
 
                     }
                     vm.setAppBarTitle(destination.title)

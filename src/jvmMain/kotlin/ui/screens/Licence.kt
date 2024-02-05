@@ -13,10 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
+import moe.tlaster.precompose.koin.koinViewModel
 import viewmodel.MainViewModel
 
 @Composable
-fun License(vm: MainViewModel) {
+fun License() {
+    val vm: MainViewModel = koinViewModel()
     val state = rememberLazyListState()
     Box(modifier = Modifier.fillMaxSize(), Alignment.Center) {
         LazyColumn(

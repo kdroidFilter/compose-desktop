@@ -14,15 +14,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import enums.NavigationDestination
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
+import org.koin.compose.getKoin
 import ui.components.InfoContainer
 import ui.components.PointerModifier
 import utils.stringResource
 import viewmodel.MainViewModel
 
 @Composable
-fun FirstConfig(vm: MainViewModel, navigator: Navigator) {
+fun FirstConfig() {
+    val vm: MainViewModel = koinViewModel()
+    val navigator: Navigator = getKoin().get()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center) {

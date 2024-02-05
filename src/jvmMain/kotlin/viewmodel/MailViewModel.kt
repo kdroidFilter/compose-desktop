@@ -18,7 +18,6 @@ import utils.RegexVerificator
 import utils.pluralResource
 
 class MailViewModel(val vm: MainViewModel, val navigator: Navigator) : ViewModel() {
-
     //MAIL SENDER
     private val _mailModel = MutableStateFlow(EmailModel("", "", "", ""))
     val mailModel = _mailModel.asStateFlow()

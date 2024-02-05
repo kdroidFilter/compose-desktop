@@ -8,48 +8,43 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.SaveableStateRegistry
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.example.compose.App
-import data.manager.PreferencesManager
-import data.repository.*
+import data.repository.NotesDatabaseRepository
 import di.AppModule
-import dorkbox.systemTray.*
-import kotlinx.coroutines.CoroutineScope
-import moe.tlaster.precompose.PreComposeWindowHolder
+import dorkbox.systemTray.Checkbox
+import dorkbox.systemTray.Menu
+import dorkbox.systemTray.MenuItem
+import dorkbox.systemTray.Separator
+import dorkbox.systemTray.SystemTray
 import moe.tlaster.precompose.koin.koinViewModel
-import moe.tlaster.precompose.lifecycle.LocalLifecycleOwner
-import moe.tlaster.precompose.navigation.rememberNavigator
+import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.stateholder.LocalStateHolder
-import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.stateholder.StateHolder
-import moe.tlaster.precompose.ui.LocalBackDispatcherOwner
 import moe.tlaster.precompose.viewmodel.viewModel
 import navigation.NavGraph
+import org.koin.compose.getKoin
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.parameter.parametersOf
-import org.koin.dsl.module
 import ui.components.KofiButton
 import ui.components.TopBarElements
 import ui.components.loadAppIcon
 import ui.dialogs.UpdaterDialog
-import utils.Localization
 import utils.SnackBarDisplayer
 import utils.stringResource
 import viewmodel.MainViewModel
 import viewmodel.NotesViewModel
 import java.awt.Dimension
-import java.util.*
+import java.util.Locale
 
 
 fun main() = application() {
+    val appModule = AppModule
     startKoin {
-        modules(AppModule.appModule)
+        modules(appModule.appModule, appModule.navigatorModule)
     }
 
     val stateHolder = remember { StateHolder() }
@@ -98,7 +93,7 @@ fun main() = application() {
             App(vm) {
 
                 val snackbarHostState = remember { SnackbarHostState() }
-                val navigator = rememberNavigator()
+                val navigator: Navigator = getKoin().get()
                 SnackBarDisplayer(vm, snackbarHostState)
                 Scaffold(
                     topBar = { WindowDraggableArea { TopBarElements(vm, navigator).TopBar() } },
@@ -108,7 +103,7 @@ fun main() = application() {
                     Surface(
                         Modifier.padding(paddingValues).padding(16.dp).fillMaxSize()
                     ) {
-                        NavGraph(vm, navigator, notesViewModel)
+                        NavGraph(notesViewModel)
                         UpdaterDialog(vm)
                     }
                 }

@@ -25,8 +25,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.OutlinedRichTextEditor
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.viewmodel.viewModel
+import org.koin.compose.getKoin
 import ui.components.InfoContainer
 import ui.components.PointerModifier
 import utils.stringResource
@@ -35,7 +37,10 @@ import viewmodel.MailViewModel
 import viewmodel.MainViewModel
 
 @Composable
-fun ContactHome(vm: MainViewModel, navigator: Navigator) {
+fun ContactHome() {
+    val vm: MainViewModel = koinViewModel()
+    val navigator: Navigator = getKoin().get()
+
     Column(
         Modifier.fillMaxSize()
     ) {
@@ -146,7 +151,6 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
                         )
                     }
                 }
-
             }
         }
     }

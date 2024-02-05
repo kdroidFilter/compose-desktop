@@ -50,6 +50,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import moe.tlaster.precompose.koin.koinViewModel
 import ui.components.AlignedRow
 import ui.components.AlignedRowSpacer
 import ui.components.IconToggleButton
@@ -62,7 +63,9 @@ import viewmodel.MainViewModel
 
 
 @Composable
-fun Settings(vm: MainViewModel) {
+fun Settings() {
+    val vm: MainViewModel = koinViewModel()
+
     Column(modifier = Modifier.fillMaxSize().padding(start = 32.dp)) {
 
         val tabs = vm.settingTabs
