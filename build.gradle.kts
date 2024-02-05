@@ -68,6 +68,11 @@ kotlin {
                 //Database Librairies
                 implementation(libs.sqldelight.driver)
                 implementation(libs.sqlite.jdbc)
+
+                //App Indicator (because the Tray function of compose is very very horrible)
+                implementation("net.java.dev.jna:jna:5.14.0")
+                implementation("com.dorkbox:SystemTray:4.4")
+
             }
         }
     }

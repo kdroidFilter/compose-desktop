@@ -55,7 +55,6 @@ fun Home(mainViewModel: MainViewModel, vm: NotesViewModel, navigator: Navigator)
     val notesList = vm.notes.collectAsState().value
     val isAdding = vm.isAdding.collectAsState().value
 
-
     if (isAdding) {
         AddNoteDialog(vm)
     }
@@ -136,8 +135,10 @@ fun NoteCard(note: Notes, vm: NotesViewModel) {
 }
 @Composable
 fun NotesList(notes: List<Notes>, vm: NotesViewModel) {
-    // Définir une configuration de grille, ici on fixe le nombre de colonnes à 2 par exemple
-    val gridConfig = GridCells.Fixed(2)
+    // Définir une configuration de grille pour adapter automatiquement le nombre de colonnes
+    // en fonction de la largeur disponible et de la largeur minimale de chaque note
+    val minNoteWidth = 300.dp // Vous pouvez ajuster cette valeur à vos besoins
+    val gridConfig = GridCells.Adaptive(minSize = minNoteWidth)
 
     LazyVerticalGrid(
         columns = gridConfig,
@@ -148,6 +149,7 @@ fun NotesList(notes: List<Notes>, vm: NotesViewModel) {
         }
     }
 }
+
 
 @Composable
 fun AddNoteDialog(vm: NotesViewModel) {

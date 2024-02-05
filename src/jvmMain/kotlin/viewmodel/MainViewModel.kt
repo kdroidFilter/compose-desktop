@@ -30,7 +30,9 @@ import data.repository.TextRepository
 import data.repository.ThemeModeRepository
 import data.repository.VersionRepository
 import data.repository.WindowsPlacementRepository
+import dorkbox.systemTray.SystemTray
 import enums.AppBarMode
+import enums.ExitMode
 import enums.NavigationDestination
 import enums.ThemeMode
 import enums.WindowsPlacementConfig
@@ -65,7 +67,30 @@ class MainViewModel(
     val client = TrustAllCertsHttpClient.client
 
     //EXIT MODE
-    fun exit() = applicationScope::exitApplication
+
+    private val _exitMode = MutableStateFlow(preferencesManager.getExitMode())
+    val exitMode = _exitMode.asStateFlow()
+
+    fun getAllExitModes(): List<ExitMode> = ExitMode.entries
+    fun setExitMode(mode: String) {
+        preferencesManager.setExitMode(mode)
+        _exitMode.value = mode
+    }
+
+    val isBackgroundedOnExitAction = preferencesManager.getExitMode() == ExitMode.BACKGROUND.text
+
+
+    private val _isWindowVisible = MutableStateFlow(true)
+    val isWindowVisible = _isWindowVisible.asStateFlow()
+    fun setWindowVisibility(visible: Boolean) {
+        _isWindowVisible.value = visible
+
+    }
+    fun exit(): () -> Unit {
+        if (isBackgroundedOnExitAction) {
+            return { setWindowVisibility(false)}
+        } else return applicationScope::exitApplication
+    }
 
     //FIRST CONFIG
     private val _wasConfig = MutableStateFlow(preferencesManager.wasConfig())

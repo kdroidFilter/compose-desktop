@@ -121,6 +121,7 @@ fun BasicSettings(vm: MainViewModel) {
                 AlignedRowSpacer()
                 SubTitle(stringResource("user_interface_behavior_label"))
                 Column(Modifier.padding(start = 32.dp)) {
+                    ExitModeButton(vm)
                     WindowsStateRadioButtons(vm)
                     ThemeModeSelection(vm)
                     AlwaysOnTopButtonMode(vm)
@@ -429,5 +430,36 @@ fun AlwaysOnTopButtonMode(vm: MainViewModel) {
                 vm.setAlwaysOnTop(it)
             }, modifier = PointerModifier
         )
+    })
+}
+
+@Composable
+fun ExitModeButton(vm: MainViewModel){
+    AlignedRow({
+        RowLabel(stringResource("exit_mode_switch_label")) },{
+        var isOpened by remember { mutableStateOf(false) }
+        var selectedMode = vm.exitMode.collectAsState().value
+
+        Box {
+            TextButton({ isOpened = true }, modifier = PointerModifier) {
+                Text(selectedMode)
+            }
+            DropdownMenu(expanded = isOpened, onDismissRequest = { isOpened = !isOpened }) {
+
+                vm.getAllExitModes().forEach { mode ->
+                    DropdownMenuItem(text = {
+                        Text(
+                            text = mode.text,
+                            fontWeight = if (mode.text == vm.exitMode.collectAsState().value) FontWeight.Bold else FontWeight.Normal
+                        )
+                    }, onClick = {
+                        selectedMode = mode.text
+                        vm.setExitMode(mode.text)
+                        isOpened = false
+                    })
+                }
+            }
+        }
+
     })
 }
