@@ -13,12 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.example.compose.App
+import data.manager.TrayIconManager
 import di.AppModule
-import dorkbox.systemTray.Checkbox
-import dorkbox.systemTray.Menu
-import dorkbox.systemTray.MenuItem
-import dorkbox.systemTray.Separator
-import dorkbox.systemTray.SystemTray
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.stateholder.LocalStateHolder
 import moe.tlaster.precompose.stateholder.StateHolder
@@ -45,13 +41,15 @@ fun main() = application() {
             appModule.navigatorModule,
             appModule.snackbarHostState,
             appModule.notesModule,
-            appModule.contactModule
+            appModule.contactModule,
+            appModule.trayModule
             )
     }
     val stateHolder = remember { StateHolder() }
     CompositionLocalProvider(LocalStateHolder provides stateHolder) {
 
         val vm: MainViewModel = koinViewModel { parametersOf(this) }
+        val trayIconManager: TrayIconManager = getKoin().get()
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
         val appIcon = loadAppIcon()
         Window(
@@ -64,35 +62,6 @@ fun main() = application() {
             visible = vm.isWindowVisible.collectAsState().value
         ) {
             window.minimumSize = Dimension(680, 370)
-
-            val tray = SystemTray.get()
-            val menu = tray.menu
-            val trayIcon = this::class.java.classLoader.getResource("AppIcon.png")
-            tray.setImage(trayIcon)
-
-            menu.add(MenuItem("Open") {
-                vm.setWindowVisibility(true)
-            })
-            menu.add(MenuItem("hide") {
-                // tray.setEnabled(false)
-                run { vm.setWindowVisibility(false) }
-            })
-
-            // add a checkbox
-            menu.add(Checkbox("Checkbox Item") {
-                println("Checkbox Item: $it")
-            })
-
-            // add a separator
-            menu.add(Separator())
-
-            // add a submenu
-            val submenu = Menu("Submenu")
-            submenu.add(MenuItem("exit") {
-                exitApplication()
-            })
-            menu.add(submenu)
-
 
             App() {
                 val snackbarHostState : SnackbarHostState = getKoin().get()
