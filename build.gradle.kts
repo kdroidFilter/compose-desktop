@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.kdroidFilter.compose-desktop"
-version = "0.1.9.3"
+version = "0.2.0"
 
 repositories {
     mavenCentral()
@@ -29,6 +29,7 @@ kotlin {
         val jvmMain: KotlinSourceSet by getting {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
+                implementation(libs.jna.platform)
                 implementation(compose.desktop.currentOs)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -69,13 +70,12 @@ kotlin {
                 implementation(libs.sqlite.jdbc)
 
                 //App Indicator (because the Tray function of compose is very very horrible)
-                implementation("net.java.dev.jna:jna:5.13.0")
-                implementation("com.dorkbox:SystemTray:4.4")
+                implementation(libs.systemTray)
 
                 //Koin
                 api(libs.koin)
                 api(libs.koin.compose)
-                api("moe.tlaster:precompose-koin:1.5.10")
+                api(libs.koin.precompose)
 
             }
         }
