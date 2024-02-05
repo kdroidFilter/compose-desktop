@@ -45,7 +45,12 @@ class TrayIconManager() {
         // add a submenu
         val submenu = Menu("Submenu")
         submenu.add(MenuItem("exit") {
-            vm.exit()
+         try {
+             vm.exit()
+             System.exit(0)
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
         })
         menu.add(submenu)
 
