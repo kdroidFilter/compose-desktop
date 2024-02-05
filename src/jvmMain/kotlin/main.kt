@@ -44,7 +44,8 @@ fun main() = application() {
             appModule.appModule,
             appModule.navigatorModule,
             appModule.snackbarHostState,
-            appModule.notesModule
+            appModule.notesModule,
+            appModule.contactModule
             )
     }
     val stateHolder = remember { StateHolder() }
@@ -62,6 +63,7 @@ fun main() = application() {
             alwaysOnTop = vm.alwaysOnTopMode.collectAsState().value,
             visible = vm.isWindowVisible.collectAsState().value
         ) {
+            window.minimumSize = Dimension(680, 370)
 
             val tray = SystemTray.get()
             val menu = tray.menu
@@ -92,7 +94,6 @@ fun main() = application() {
             menu.add(submenu)
 
 
-            window.minimumSize = Dimension(680, 370)
             App() {
                 val snackbarHostState : SnackbarHostState = getKoin().get()
                 SnackBarDisplayer()

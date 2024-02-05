@@ -13,6 +13,7 @@ import data.repository.WindowsPlacementRepository
 import moe.tlaster.precompose.navigation.Navigator
 import org.koin.dsl.module
 import utils.Localization
+import viewmodel.MailViewModel
 import viewmodel.MainViewModel
 import viewmodel.NotesViewModel
 
@@ -49,6 +50,10 @@ object AppModule {
         single {
             NotesViewModel(repository = get())
         }
+    }
+
+    val contactModule = module {
+        single { MailViewModel() }
     }
 
     val navigatorModule = module {

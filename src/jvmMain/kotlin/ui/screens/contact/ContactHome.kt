@@ -26,9 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.OutlinedRichTextEditor
 import moe.tlaster.precompose.koin.koinViewModel
-import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.viewmodel.viewModel
-import org.koin.compose.getKoin
 import ui.components.InfoContainer
 import ui.components.PointerModifier
 import utils.stringResource
@@ -36,24 +33,15 @@ import utils.texteditor.components.RichTextStyleRow
 import viewmodel.MailViewModel
 import viewmodel.MainViewModel
 
-@Composable
-fun ContactHome() {
-    val vm: MainViewModel = koinViewModel()
-    val navigator: Navigator = getKoin().get()
-
-    Column(
-        Modifier.fillMaxSize()
-    ) {
-        ContactForm(vm, viewModel { MailViewModel(vm, navigator) })
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
-    val mailModel = vm.mailModel.collectAsState()
+fun ContactHome() {
+    val mainViewModel: MainViewModel = koinViewModel()
+    val mailViewModel: MailViewModel = koinViewModel()
+
+    val mailModel = mailViewModel.mailModel.collectAsState()
     val message = rememberRichTextState()
-    val fieldStatus = vm.formStatus.collectAsState().value
+    val fieldStatus = mailViewModel.formStatus.collectAsState().value
 
     Box(contentAlignment = Alignment.TopCenter, modifier = Modifier.fillMaxSize()) {
         Column(
@@ -65,7 +53,7 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 TextField(
                     value = mailModel.value.name,
-                    onValueChange = { vm.updateMailModel("name", it) },
+                    onValueChange = { mailViewModel.updateMailModel("name", it) },
                     placeholder = { Text(stringResource("enter_name")) },
                     modifier = Modifier.weight(1f),
                     label = { Text(stringResource("name")) },
@@ -76,12 +64,12 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
                         )
                     },
                     enabled = fieldStatus,
-                    isError = vm.isNameError.collectAsState().value,
+                    isError = mailViewModel.isNameError.collectAsState().value,
                     maxLines = 1
                 )
                 TextField(
                     value = mailModel.value.email,
-                    onValueChange = { vm.updateMailModel("email", it) },
+                    onValueChange = { mailViewModel.updateMailModel("email", it) },
                     placeholder = { Text(stringResource("enter_email")) },
                     modifier = Modifier.weight(1f),
                     label = { Text(stringResource("email")) },
@@ -92,14 +80,14 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
                         )
                     },
                     enabled = fieldStatus,
-                    isError = vm.isEmailError.collectAsState().value,
+                    isError = mailViewModel.isEmailError.collectAsState().value,
                     maxLines = 1
                 )
             }
 
             TextField(
                 value = mailModel.value.subject,
-                onValueChange = { vm.updateMailModel("subject", it) },
+                onValueChange = { mailViewModel.updateMailModel("subject", it) },
                 placeholder = { Text(stringResource("enter_subject")) },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(stringResource("subject")) },
@@ -110,7 +98,7 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
                     )
                 },
                 enabled = fieldStatus,
-                isError = vm.isSubjectError.collectAsState().value,
+                isError = mailViewModel.isSubjectError.collectAsState().value,
                 maxLines = 1
             )
 
@@ -138,8 +126,8 @@ fun ContactForm(mainViewModel: MainViewModel, vm: MailViewModel) {
             ) {
                 Button(enabled = fieldStatus,
                     onClick = {
-                        vm.updateMailModel("message", message.toHtml())
-                        vm.sendMail()
+                        mailViewModel.updateMailModel("message", message.toHtml())
+                        mailViewModel.sendMail()
                     }) {
                     Row(PointerModifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(stringResource("send"))

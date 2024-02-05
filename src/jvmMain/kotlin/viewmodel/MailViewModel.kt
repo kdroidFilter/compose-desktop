@@ -1,6 +1,5 @@
 package viewmodel
 
-import androidx.compose.runtime.mutableStateOf
 import data.model.EmailModel
 import enums.EmailStatus
 import enums.NavigationDestination
@@ -13,11 +12,14 @@ import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import org.koin.mp.KoinPlatform.getKoin
 import utils.EmailSender
 import utils.RegexVerificator
 import utils.pluralResource
 
-class MailViewModel(val vm: MainViewModel, val navigator: Navigator) : ViewModel() {
+class MailViewModel() : ViewModel() {
+    val vm : MainViewModel = getKoin().get()
+    val navigator: Navigator = getKoin().get()
     //MAIL SENDER
     private val _mailModel = MutableStateFlow(EmailModel("", "", "", ""))
     val mailModel = _mailModel.asStateFlow()
