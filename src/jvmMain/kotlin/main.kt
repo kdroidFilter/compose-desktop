@@ -8,23 +8,32 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.SaveableStateRegistry
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.example.compose.App
 import data.manager.PreferencesManager
 import data.repository.*
+import di.AppModule
 import dorkbox.systemTray.*
+import kotlinx.coroutines.CoroutineScope
 import moe.tlaster.precompose.PreComposeWindowHolder
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.lifecycle.LocalLifecycleOwner
 import moe.tlaster.precompose.navigation.rememberNavigator
 import moe.tlaster.precompose.stateholder.LocalStateHolder
+import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.stateholder.StateHolder
 import moe.tlaster.precompose.ui.LocalBackDispatcherOwner
 import moe.tlaster.precompose.viewmodel.viewModel
 import navigation.NavGraph
+import org.koin.core.context.GlobalContext.startKoin
+import org.koin.core.parameter.parametersOf
+import org.koin.dsl.module
 import ui.components.KofiButton
 import ui.components.TopBarElements
 import ui.components.loadAppIcon
@@ -39,27 +48,15 @@ import java.util.*
 
 
 fun main() = application() {
+    startKoin {
+        modules(AppModule.appModule)
+    }
 
     val stateHolder = remember { StateHolder() }
-
     CompositionLocalProvider(LocalStateHolder provides stateHolder) {
-        val vm = viewModel(
-        ) {
-            MainViewModel(
-                localizationRepository = Localization,
-                preferencesManager = PreferencesManager,
-                colorRepository = ColorRepository,
-                versionReposition = VersionRepository,
-                windowsPlacementRepository = WindowsPlacementRepository,
-                themeModeRepository = ThemeModeRepository,
-                textRepository = TextRepository,
-                settingsTabsRepository = SettingsTabsRepository,
-                applicationScope = this, // Ensure 'this' refers to the correct scope.
-                savedStateHolder = it
-            )
-        }
+        val vm: MainViewModel = koinViewModel { parametersOf(this) }
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
-        val notesViewModel = viewModel {   NotesViewModel(NotesDatabaseRepository) }
+        val notesViewModel = viewModel { NotesViewModel(NotesDatabaseRepository) }
         val appIcon = loadAppIcon()
         Window(
             onCloseRequest = vm.exit(),

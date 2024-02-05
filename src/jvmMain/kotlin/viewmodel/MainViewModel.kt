@@ -62,8 +62,7 @@ class MainViewModel(
     private val windowsPlacementRepository: WindowsPlacementRepository,
     private val textRepository: TextRepository,
     private val settingsTabsRepository: SettingsTabsRepository,
-    private val applicationScope: ApplicationScope,
-    private val savedStateHolder: SavedStateHolder
+    private val applicationScope: ApplicationScope
 ) : ViewModel() {
 
     val client = TrustAllCertsHttpClient.client
