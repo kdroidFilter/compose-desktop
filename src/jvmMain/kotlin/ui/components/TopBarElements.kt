@@ -1,12 +1,10 @@
 package ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -57,27 +55,30 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.WindowMaximize
 import compose.icons.fontawesomeicons.solid.WindowRestore
 import enums.NavigationDestination
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.getKoin
 import utils.AsyncImage
 import utils.loadImageBitmap
 import utils.openUrlInBrowser
 import utils.stringResource
 import viewmodel.MainViewModel
 
-class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
+class TopBarElements {
 
-    val littleIconModifier = Modifier.height(16.dp).padding(2.dp)
-    val iconButtonModifier = PointerModifier.height(20.dp).width(22.dp)
+    private val littleIconModifier = Modifier.height(16.dp).padding(2.dp)
+    private val iconButtonModifier = PointerModifier.height(20.dp).width(22.dp)
 
-    val bigIconModifier = Modifier.height(22.dp)
-    val bigIconButtonModifier = PointerModifier.height(28.dp)
+    private val bigIconModifier = Modifier.height(22.dp)
+    private val bigIconButtonModifier = PointerModifier.height(28.dp)
 
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun TopBar() {
+        val vm: MainViewModel = koinViewModel()
         val material2 = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.surface,
@@ -90,7 +91,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
                 vm.appBarTitle.collectAsState().value,
                 modifier = Modifier.padding(start = 64.dp)
             )
-        }, navigationIcon = { HomeButton(vm) }, actions = {
+        }, navigationIcon = { HomeButton() }, actions = {
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.End,
@@ -114,6 +115,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun DarkThemeButton() {
+        val vm: MainViewModel = koinViewModel()
         if (!vm.darkModeSwitch.collectAsState().value) return
         IconButton(onClick = { vm.toggleTheme() }, modifier = bigIconButtonModifier) {
             Icon(
@@ -126,6 +128,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun FullScreenButton() {
+        val vm: MainViewModel = koinViewModel()
         val icon =
             if (vm.isNotFullScreen()
                     .collectAsState().value
@@ -140,7 +143,10 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @OptIn(ExperimentalResourceApi::class)
     @Composable
-    fun HomeButton(vm: MainViewModel) {
+    fun HomeButton() {
+        val vm: MainViewModel = koinViewModel()
+        val navigator: Navigator = getKoin().get()
+
         val isRtl = vm.isCurrentLanguageRtl()
         val iconModifier = Modifier.height(22.dp)
         val canGoBack =
@@ -180,6 +186,8 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun VerticalButton() {
+        val vm: MainViewModel = koinViewModel()
+        val navigator: Navigator = getKoin().get()
         var isOpened by remember { mutableStateOf(false) }
         Box {
             IconButton(modifier = bigIconButtonModifier, onClick = {
@@ -187,7 +195,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
             }) { Icon(imageVector = Icons.Rounded.MoreVert, null) }
             DropdownMenu(expanded = isOpened, onDismissRequest = { isOpened = !isOpened }) {
                 val menuItems = listOf(NavigationDestination.About, NavigationDestination.License)
-                menuItems.forEach() { item ->
+                menuItems.forEach { item ->
                     val isSelected = item.route == vm.currentRoute.collectAsState().value
                     DropdownMenuItem(modifier = PointerModifier, text = {
                         Row {
@@ -209,6 +217,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun ExitButton() {
+        val vm: MainViewModel = koinViewModel()
         if (!vm.isNotFullScreen().collectAsState().value || vm.isMaterialWindows) {
             IconButton(
                 modifier = iconButtonModifier, onClick = vm.exit()
@@ -220,6 +229,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun MaximixedButton() {
+        val vm: MainViewModel = koinViewModel()
         if (!vm.isMaterialWindows || !vm.isNotFullScreen().collectAsState().value) return
         val icon = mutableStateOf(Icons.Rounded.Maximize)
         if (!vm.isMaximised.collectAsState().value) {
@@ -233,6 +243,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun MinimizedButton() {
+        val vm: MainViewModel = koinViewModel()
         if (!vm.isMaterialWindows || !vm.isNotFullScreen().collectAsState().value) return
             IconButton(modifier = iconButtonModifier, onClick = { vm.minimized() }
             ) {
@@ -242,6 +253,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun UpdateButton() {
+        val vm: MainViewModel = koinViewModel()
         if (vm.showUpdateButton.value) {
             IconButton({ vm.showUpdater() }, modifier = PointerModifier) {
                 Icon(Icons.Rounded.SystemUpdateAlt, null)
@@ -251,6 +263,7 @@ class TopBarElements(val vm: MainViewModel, val navigator: Navigator) {
 
     @Composable
     fun KofiPostButton(posts: List<data.model.KofiPost>) {
+        val vm: MainViewModel = koinViewModel()
         if (!vm.feedSwitch.collectAsState().value) return
         var expanded by remember { mutableStateOf(false) }
 

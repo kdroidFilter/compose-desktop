@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.example.compose.App
-import data.repository.NotesDatabaseRepository
 import di.AppModule
 import dorkbox.systemTray.Checkbox
 import dorkbox.systemTray.Menu
@@ -21,10 +20,8 @@ import dorkbox.systemTray.MenuItem
 import dorkbox.systemTray.Separator
 import dorkbox.systemTray.SystemTray
 import moe.tlaster.precompose.koin.koinViewModel
-import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.stateholder.LocalStateHolder
 import moe.tlaster.precompose.stateholder.StateHolder
-import moe.tlaster.precompose.viewmodel.viewModel
 import navigation.NavGraph
 import org.koin.compose.getKoin
 import org.koin.core.context.GlobalContext.startKoin
@@ -36,7 +33,6 @@ import ui.dialogs.UpdaterDialog
 import utils.SnackBarDisplayer
 import utils.stringResource
 import viewmodel.MainViewModel
-import viewmodel.NotesViewModel
 import java.awt.Dimension
 import java.util.Locale
 
@@ -44,14 +40,18 @@ import java.util.Locale
 fun main() = application() {
     val appModule = AppModule
     startKoin {
-        modules(appModule.appModule, appModule.navigatorModule)
+        modules(
+            appModule.appModule,
+            appModule.navigatorModule,
+            appModule.snackbarHostState,
+            appModule.notesModule
+            )
     }
-
     val stateHolder = remember { StateHolder() }
     CompositionLocalProvider(LocalStateHolder provides stateHolder) {
+
         val vm: MainViewModel = koinViewModel { parametersOf(this) }
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
-        val notesViewModel = viewModel { NotesViewModel(NotesDatabaseRepository) }
         val appIcon = loadAppIcon()
         Window(
             onCloseRequest = vm.exit(),
@@ -62,6 +62,7 @@ fun main() = application() {
             alwaysOnTop = vm.alwaysOnTopMode.collectAsState().value,
             visible = vm.isWindowVisible.collectAsState().value
         ) {
+
             val tray = SystemTray.get()
             val menu = tray.menu
             val trayIcon = this::class.java.classLoader.getResource("AppIcon.png")
@@ -89,22 +90,22 @@ fun main() = application() {
                 exitApplication()
             })
             menu.add(submenu)
-            window.minimumSize = Dimension(680, 370)
-            App(vm) {
 
-                val snackbarHostState = remember { SnackbarHostState() }
-                val navigator: Navigator = getKoin().get()
-                SnackBarDisplayer(vm, snackbarHostState)
+
+            window.minimumSize = Dimension(680, 370)
+            App() {
+                val snackbarHostState : SnackbarHostState = getKoin().get()
+                SnackBarDisplayer()
                 Scaffold(
-                    topBar = { WindowDraggableArea { TopBarElements(vm, navigator).TopBar() } },
-                    floatingActionButton = { KofiButton(vm) },
+                    topBar = { WindowDraggableArea { TopBarElements().TopBar() } },
+                    floatingActionButton = { KofiButton() },
                     snackbarHost = { SnackbarHost(snackbarHostState) },
                 ) { paddingValues ->
                     Surface(
                         Modifier.padding(paddingValues).padding(16.dp).fillMaxSize()
                     ) {
-                        NavGraph(notesViewModel)
-                        UpdaterDialog(vm)
+                        NavGraph()
+                        UpdaterDialog()
                     }
                 }
             }

@@ -1,18 +1,20 @@
 package di
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.ui.window.ApplicationScope
 import data.manager.PreferencesManager
 import data.repository.ColorRepository
+import data.repository.NotesDatabaseRepository
 import data.repository.SettingsTabsRepository
 import data.repository.TextRepository
 import data.repository.ThemeModeRepository
 import data.repository.VersionRepository
 import data.repository.WindowsPlacementRepository
 import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.stateholder.SavedStateHolder
 import org.koin.dsl.module
 import utils.Localization
 import viewmodel.MainViewModel
+import viewmodel.NotesViewModel
 
 object AppModule {
     val appModule = module {
@@ -42,9 +44,22 @@ object AppModule {
         }
     }
 
+    val notesModule = module {
+        single { NotesDatabaseRepository }
+        single {
+            NotesViewModel(repository = get())
+        }
+    }
+
     val navigatorModule = module {
         single {
             Navigator()
+        }
+    }
+
+    val snackbarHostState = module {
+        single {
+            SnackbarHostState()
         }
     }
 }

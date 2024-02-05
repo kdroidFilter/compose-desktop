@@ -8,11 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
@@ -34,27 +32,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogWindow
-import data.repository.NotesDatabaseRepository
 import moe.tlaster.precompose.koin.koinViewModel
-import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.stateholder.StateHolder
-import moe.tlaster.precompose.viewmodel.viewModel
 import queries.notes.Notes
-import ui.components.PointerModifier
-import utils.OsDetector
 import utils.stringResource
 import utils.unixToDateString
 import viewmodel.MainViewModel
 import viewmodel.NotesViewModel
-import java.awt.Toolkit
-import java.io.File
-import java.util.UUID
 
 
 @Composable
-fun Home( vm: NotesViewModel) {
+fun Home() {
     val mainViewModel: MainViewModel = koinViewModel()
+    val vm : NotesViewModel = koinViewModel()
 
     val notesList = vm.notes.collectAsState().value
     val isAdding = vm.isAdding.collectAsState().value

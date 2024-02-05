@@ -16,11 +16,10 @@ import ui.screens.Settings
 import ui.screens.contact.ContactConfirmation
 import ui.screens.contact.ContactHome
 import viewmodel.MainViewModel
-import viewmodel.NotesViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NavGraph(notesViewModel: NotesViewModel) {
+fun NavGraph() {
     val vm: MainViewModel = koinViewModel()
     val navigator: Navigator = getKoin().get()
     Row {
@@ -34,7 +33,7 @@ fun NavGraph(notesViewModel: NotesViewModel) {
                 scene(destination.route) {
                     when (destination) {
                         NavigationDestination.FirstConfig -> FirstConfig()
-                        NavigationDestination.Home -> Home( notesViewModel)
+                        NavigationDestination.Home -> Home()
                         NavigationDestination.About -> About()
                         NavigationDestination.Contact -> ContactHome()
                         NavigationDestination.ContactConfirmation -> ContactConfirmation()

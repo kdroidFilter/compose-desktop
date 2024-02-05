@@ -27,13 +27,15 @@ import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import moe.tlaster.precompose.koin.koinViewModel
 import utils.openUrlInBrowser
 import utils.stringResource
 import viewmodel.MainViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun KofiButton(vm: MainViewModel) {
+fun KofiButton() {
+    val vm: MainViewModel = koinViewModel()
     var isHovered by remember { mutableStateOf(false) }
     val isActivated = vm.kofiButtonStatus.collectAsState().value
 

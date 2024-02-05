@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import moe.tlaster.precompose.koin.koinViewModel
 import ui.components.InfoContainer
 import ui.components.PointerModifier
 import utils.openUrlInBrowser
@@ -18,7 +19,8 @@ import utils.stringResource
 import viewmodel.MainViewModel
 
 @Composable
-fun UpdaterDialog(vm: MainViewModel) {
+fun UpdaterDialog() {
+    val vm: MainViewModel = koinViewModel()
     val isUpdatedRequired = vm.isUpdateRequired.value
     if (isUpdatedRequired) {
         AlertDialog(

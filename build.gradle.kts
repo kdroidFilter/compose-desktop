@@ -1,5 +1,4 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
@@ -70,7 +69,7 @@ kotlin {
                 implementation(libs.sqlite.jdbc)
 
                 //App Indicator (because the Tray function of compose is very very horrible)
-                implementation("net.java.dev.jna:jna:5.14.0")
+                implementation("net.java.dev.jna:jna:5.13.0")
                 implementation("com.dorkbox:SystemTray:4.4")
 
                 //Koin

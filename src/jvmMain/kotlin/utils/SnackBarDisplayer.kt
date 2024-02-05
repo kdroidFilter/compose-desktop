@@ -4,10 +4,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import moe.tlaster.precompose.koin.koinViewModel
+import org.koin.compose.getKoin
 import viewmodel.MainViewModel
 
 @Composable
-fun SnackBarDisplayer(vm: MainViewModel, snackbarHostState: SnackbarHostState) {
+fun SnackBarDisplayer() {
+    val vm: MainViewModel = koinViewModel()
+    val snackbarHostState : SnackbarHostState = getKoin().get()
     LaunchedEffect(snackbarHostState) {
         vm.snackbarEvent.collect { event ->
             event?.let {
