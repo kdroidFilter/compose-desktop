@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.OutlinedRichTextEditor
 import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.viewmodel.viewModel
 import ui.components.InfoContainer
 import ui.components.PointerModifier
 import utils.stringResource
@@ -38,7 +39,7 @@ fun ContactHome(vm: MainViewModel, navigator: Navigator) {
     Column(
         Modifier.fillMaxSize()
     ) {
-        ContactForm(vm, MailViewModel(vm, navigator))
+        ContactForm(vm, viewModel { MailViewModel(vm, navigator) })
     }
 }
 

@@ -37,6 +37,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindow
 import data.repository.NotesDatabaseRepository
 import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.stateholder.StateHolder
 import moe.tlaster.precompose.viewmodel.viewModel
 import queries.notes.Notes
 import ui.components.PointerModifier

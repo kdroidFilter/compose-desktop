@@ -45,6 +45,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 import utils.DarkModeDetector
@@ -61,7 +62,8 @@ class MainViewModel(
     private val windowsPlacementRepository: WindowsPlacementRepository,
     private val textRepository: TextRepository,
     private val settingsTabsRepository: SettingsTabsRepository,
-    private val applicationScope: ApplicationScope
+    private val applicationScope: ApplicationScope,
+    private val savedStateHolder: SavedStateHolder
 ) : ViewModel() {
 
     val client = TrustAllCertsHttpClient.client
