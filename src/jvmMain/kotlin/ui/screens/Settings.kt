@@ -439,9 +439,9 @@ fun AlwaysOnTopButtonMode(vm: MainViewModel) {
 @Composable
 fun ExitModeButton(vm: MainViewModel){
     AlignedRow({
-        RowLabel(stringResource("exit_mode_switch_label")) },{
+        RowLabel(stringResource("app_close_action_label")) },{
         var isOpened by remember { mutableStateOf(false) }
-        var selectedMode = vm.exitMode.collectAsState().value
+        var selectedMode = vm.getAppCloseActionName()
 
         Box {
             TextButton({ isOpened = true }, modifier = PointerModifier) {
@@ -449,15 +449,15 @@ fun ExitModeButton(vm: MainViewModel){
             }
             DropdownMenu(expanded = isOpened, onDismissRequest = { isOpened = !isOpened }) {
 
-                vm.getAllExitModes().forEach { mode ->
+                vm.getAllAppCloseActions().forEach { mode ->
                     DropdownMenuItem(text = {
                         Text(
                             text = mode.text,
-                            fontWeight = if (mode.text == vm.exitMode.collectAsState().value) FontWeight.Bold else FontWeight.Normal
+                            fontWeight = if (mode.name == vm.appCloseAction.collectAsState().value) FontWeight.Bold else FontWeight.Normal
                         )
                     }, onClick = {
                         selectedMode = mode.text
-                        vm.setExitMode(mode.text)
+                        vm.setAppCloseAction(mode.name)
                         isOpened = false
                     })
                 }

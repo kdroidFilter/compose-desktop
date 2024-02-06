@@ -30,10 +30,19 @@ import utils.SnackBarDisplayer
 import utils.stringResource
 import viewmodel.MainViewModel
 import java.awt.Dimension
+import java.security.KeyStore
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.util.Locale
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
 
 
 fun main() = application() {
+
     val appModule = AppModule
     startKoin {
         modules(
@@ -53,7 +62,7 @@ fun main() = application() {
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
         val appIcon = loadAppIcon()
         Window(
-            onCloseRequest = vm.exit(),
+            onCloseRequest = { vm.exit().invoke() },
             title = stringResource("app_name"),
             state = vm.windowsState,
             icon = appIcon,
@@ -83,3 +92,4 @@ fun main() = application() {
 
     }
 }
+

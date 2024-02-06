@@ -5,7 +5,7 @@ import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 import com.russhwolf.settings.set
 import enums.AppBarMode
-import enums.ExitMode
+import enums.CloseAppAction
 import enums.ThemeMode
 import enums.WindowsPlacementConfig
 import enums.WindowsTheme
@@ -20,9 +20,9 @@ object PreferencesManager {
     }
 
     //WINDOWS EXIT MODE
-    fun getExitMode(): String = settings.get<String>("exitMode") ?: ExitMode.EXIT.text
-    fun setExitMode(mode: String) {
-        settings["exitMode"] = mode
+    fun getAppCloseAction(): String = settings.get<String>("appCloseAction") ?: CloseAppAction.EXIT.name
+    fun setAppCloseAction(mode: String) {
+        settings["appCloseAction"] = mode
     }
 
     //FIRST CONFIG

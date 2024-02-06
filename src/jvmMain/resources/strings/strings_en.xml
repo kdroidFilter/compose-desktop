@@ -63,6 +63,11 @@
     <string name="window_placement_maximized_label">Maximized</string>
     <string name="window_placement_fullscreen_label">Fullscreen</string>
 
+    <!-- Sub-Category: App Close Action -->
+    <string name="app_close_action_label">Action upon closing app</string>
+    <string name="app_close_action_quit">Quit app</string>
+    <string name="app_close_action_background">Move to background</string>
+
     <!--- Sub-Category: AlwaysOn Mode Options -->
     <string name="always_on_top_mode_switch_label">Always on Top</string>
 

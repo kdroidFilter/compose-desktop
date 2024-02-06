@@ -12,7 +12,7 @@ import java.util.logging.LogManager
 import kotlin.system.exitProcess
 
 class TrayIconManager() {
-    val vm : MainViewModel = getKoin().get()
+    val vm: MainViewModel = getKoin().get()
     private val tray = SystemTray.get()
     private val menu = tray.menu
     private var isMenuInitialized = false
@@ -29,27 +29,33 @@ class TrayIconManager() {
         tray.setImage(trayIcon)
     }
 
-     fun setupMenu() {
+    fun setupMenu() {
         // add a menu item
         menu.add(MenuItem("Open") {
-            vm.setWindowVisibility(true)
-            vm.minimized()
+            vm.openTrayButton()
         })
+
 
         // add a checkbox
-        menu.add(Checkbox("Checkbox Item") {
-            println("Checkbox Item: $it")
-        })
-
+        /*
+       menu.add(Checkbox("Checkbox Item") {
+           println("Checkbox Item: $it")
+       })
+         */
         // add a separator
         menu.add(Separator())
 
-        // add a submenu
-        val submenu = Menu("Submenu")
-        submenu.add(MenuItem("exit") {
-            exitProcess(0)
+        menu.add(MenuItem("Exit") {
+            vm.exit(forceExit = true).invoke()
         })
-        menu.add(submenu)
 
-     }
+        // add a submenu
+        /*
+       val submenu = Menu("Submenu")
+       submenu.add(MenuItem("sample") {
+       })
+       menu.add(submenu)
+
+         */
+    }
 }

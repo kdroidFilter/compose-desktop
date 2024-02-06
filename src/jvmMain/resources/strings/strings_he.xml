@@ -63,6 +63,11 @@
     <string name="window_placement_maximized_label">מוגדל</string>
     <string name="window_placement_fullscreen_label">מסך מלא</string>
 
+    <!-- Sub-Category: App Close Action -->
+    <string name="app_close_action_label">פעולה בעת סגירת האפליקציה</string>
+    <string name="app_close_action_quit">צא מהאפליקציה</string>
+    <string name="app_close_action_background">העבר לרקע</string>
+
     <!--- Sub-Category: AlwaysOn Mode Options -->
     <string name="always_on_top_mode_switch_label">תמיד בחלק העליון</string>
 

@@ -30,15 +30,12 @@ import data.repository.TextRepository
 import data.repository.ThemeModeRepository
 import data.repository.VersionRepository
 import data.repository.WindowsPlacementRepository
-import dorkbox.systemTray.SystemTray
 import enums.AppBarMode
-import enums.ExitMode
+import enums.CloseAppAction
 import enums.NavigationDestination
 import enums.ThemeMode
 import enums.WindowsPlacementConfig
 import enums.WindowsTheme
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -47,7 +44,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import moe.tlaster.precompose.stateholder.SavedStateHolder
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 import utils.DarkModeDetector
@@ -67,34 +63,45 @@ class MainViewModel(
     private val applicationScope: ApplicationScope
 ) : ViewModel() {
 
-   //val client = TrustAllCertsHttpClient.client
-    val client = HttpClient(CIO)
+   val client = TrustAllCertsHttpClient.client
+//    val client = HttpClient(CIO)
 
-    //EXIT MODE
+    //APP CLOSE ACTION
 
-    private val _exitMode = MutableStateFlow(preferencesManager.getExitMode())
-    val exitMode = _exitMode.asStateFlow()
+    private val _appCloseAction = MutableStateFlow(preferencesManager.getAppCloseAction())
+    val appCloseAction = _appCloseAction.asStateFlow()
 
-    fun getAllExitModes(): List<ExitMode> = ExitMode.entries
-    fun setExitMode(mode: String) {
-        preferencesManager.setExitMode(mode)
-        _exitMode.value = mode
+    fun getAllAppCloseActions(): List<CloseAppAction> = CloseAppAction.entries
+    fun setAppCloseAction(mode: String) {
+        preferencesManager.setAppCloseAction(mode)
+        _appCloseAction.value = mode
     }
 
-    val isBackgroundedOnExitAction = preferencesManager.getExitMode() == ExitMode.BACKGROUND.text
+    fun getAppCloseActionName(): String {
+        return when (_appCloseAction.value) {
+            CloseAppAction.BACKGROUND.name -> CloseAppAction.BACKGROUND.text
+            else -> CloseAppAction.EXIT.text
+        }
+    }
 
+    fun exit(forceExit : Boolean = false): () -> Unit {
+        return if (_appCloseAction.value != CloseAppAction.BACKGROUND.text || forceExit) {
+            applicationScope::exitApplication
+        } else {
+            { setWindowVisibility(false) }
+        }
+    }
 
+    //Hide Windows
     private val _isWindowVisible = MutableStateFlow(true)
     val isWindowVisible = _isWindowVisible.asStateFlow()
-    fun setWindowVisibility(visible: Boolean) {
-        _isWindowVisible.value = visible
+    fun setWindowVisibility(visible: Boolean) { _isWindowVisible.value = visible }
 
+    fun openTrayButton(){
+        _isWindowVisible.value = true
+        _windowsState.isMinimized = false
     }
-    fun exit(): () -> Unit {
-        if (isBackgroundedOnExitAction) {
-            return { setWindowVisibility(false)}
-        } else return applicationScope::exitApplication
-    }
+
 
     //FIRST CONFIG
     private val _wasConfig = MutableStateFlow(preferencesManager.wasConfig())
@@ -221,7 +228,7 @@ class MainViewModel(
         )
     }
 
-    fun restartToApplyChangesSnackBarMessage(){
+    private fun restartToApplyChangesSnackBarMessage(){
         showSnackbar(
             stringResource("restart_app_to_apply_changes"),
             actionLabel = stringResource("exit_action"),
@@ -477,7 +484,7 @@ class MainViewModel(
     }
 
     fun getReadme(): String {
-        return if (_readme.value.isEmpty()) preferencesManager.getTextOffline("readmeOffline") else _readme.value
+        return _readme.value.ifEmpty { preferencesManager.getTextOffline("readmeOffline") }
     }
 
     fun getLicense() = textRepository.getLicense

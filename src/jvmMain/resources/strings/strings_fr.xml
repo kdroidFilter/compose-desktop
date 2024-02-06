@@ -64,6 +64,11 @@
     <string name="window_placement_maximized_label">Maximisée</string>
     <string name="window_placement_fullscreen_label">Plein Écran</string>
 
+    <!-- Sub-Category: App Close Action -->
+    <string name="app_close_action_label">Action lors de la fermeture de l'application</string>
+    <string name="app_close_action_quit">Quitter l'application</string>
+    <string name="app_close_action_background">Mettre en arrière-plan</string>
+
     <!--- Sub-Category: AlwaysOn Mode Options -->
     <string name="always_on_top_mode_switch_label">Toujours en premier plan</string>
 

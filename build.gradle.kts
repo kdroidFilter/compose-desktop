@@ -1,6 +1,5 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-import java.io.File
 
 
 plugins {
@@ -9,10 +8,11 @@ plugins {
     id("org.jetbrains.compose")
     id("dev.hydraulic.conveyor") version "1.6"
     id("app.cash.sqldelight") version libs.versions.sqldelight.get()
+    id("com.digithurst.gradle.truststore") version "1.1.0"
 }
 
 group = "io.github.kdroidFilter.compose-desktop"
-version = "0.2.0"
+version = "0.2.1"
 
 repositories {
     mavenCentral()
@@ -110,8 +110,9 @@ compose.desktop {
         buildTypes.release.proguard {
             configurationFiles.from(project.file("root-config.pro"))
         }
-        nativeDistributions{
+        nativeDistributions {
             appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
+
         }
     }
 }
@@ -124,19 +125,3 @@ configurations.all {
     }
 }
 // endregion
-
-
-tasks.withType<JavaExec> {
-    // Chemin vers le keystore dans les ressources du projet
-    val keystorePath = "src/jvmMain/resources/netfreeKeystore.jks"
-
-    // Mots de passe du keystore et de la clé (à remplacer par vos vrais mots de passe)
-    val keystorePassword = "changeit"
-    val keyPassword = "changeit"
-
-    // Configuration des propriétés système pour utiliser le keystore comme truststore
-    systemProperty("javax.net.ssl.trustStore", keystorePath)
-    systemProperty("javax.net.ssl.trustStorePassword", keystorePassword)
-    systemProperty("javax.net.ssl.keyStore", keystorePath)
-    systemProperty("javax.net.ssl.keyStorePassword", keyPassword)
-}
