@@ -9,6 +9,7 @@ import org.koin.java.KoinJavaComponent.getKoin
 import org.koin.mp.KoinPlatform
 import viewmodel.MainViewModel
 import java.util.logging.LogManager
+import kotlin.system.exitProcess
 
 class TrayIconManager() {
     val vm : MainViewModel = getKoin().get()
@@ -32,6 +33,7 @@ class TrayIconManager() {
         // add a menu item
         menu.add(MenuItem("Open") {
             vm.setWindowVisibility(true)
+            vm.minimized()
         })
 
         // add a checkbox
@@ -45,12 +47,7 @@ class TrayIconManager() {
         // add a submenu
         val submenu = Menu("Submenu")
         submenu.add(MenuItem("exit") {
-         try {
-             vm.exit()
-             System.exit(0)
-         } catch (e: Exception) {
-             e.printStackTrace()
-         }
+            exitProcess(0)
         })
         menu.add(submenu)
 
