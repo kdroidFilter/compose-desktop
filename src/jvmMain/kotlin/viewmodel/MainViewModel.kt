@@ -37,6 +37,8 @@ import enums.NavigationDestination
 import enums.ThemeMode
 import enums.WindowsPlacementConfig
 import enums.WindowsTheme
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -65,7 +67,8 @@ class MainViewModel(
     private val applicationScope: ApplicationScope
 ) : ViewModel() {
 
-    val client = TrustAllCertsHttpClient.client
+   //val client = TrustAllCertsHttpClient.client
+    val client = HttpClient(CIO)
 
     //EXIT MODE
 

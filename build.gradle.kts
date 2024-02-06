@@ -1,5 +1,7 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import java.io.File
+
 
 plugins {
     kotlin("multiplatform")
@@ -122,3 +124,19 @@ configurations.all {
     }
 }
 // endregion
+
+
+tasks.withType<JavaExec> {
+    // Chemin vers le keystore dans les ressources du projet
+    val keystorePath = "src/jvmMain/resources/netfreeKeystore.jks"
+
+    // Mots de passe du keystore et de la clé (à remplacer par vos vrais mots de passe)
+    val keystorePassword = "changeit"
+    val keyPassword = "changeit"
+
+    // Configuration des propriétés système pour utiliser le keystore comme truststore
+    systemProperty("javax.net.ssl.trustStore", keystorePath)
+    systemProperty("javax.net.ssl.trustStorePassword", keystorePassword)
+    systemProperty("javax.net.ssl.keyStore", keystorePath)
+    systemProperty("javax.net.ssl.keyStorePassword", keyPassword)
+}
