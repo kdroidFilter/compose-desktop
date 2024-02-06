@@ -220,7 +220,7 @@ class TopBarElements {
         val vm: MainViewModel = koinViewModel()
         if (!vm.isNotFullScreen().collectAsState().value || vm.isMaterialWindows) {
             IconButton(
-                modifier = iconButtonModifier, onClick = vm.exit()
+                modifier = iconButtonModifier, onClick = vm.closeAppAction()
             ) {
                 Icon(Icons.Rounded.Close, null, littleIconModifier)
             }

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--TRAY SYSTEM-->
+    <string name="tray_button_open_app">פתח</string>
+    <string name="tray_button_quit_app">צא</string>
+
     <!--MAIN UI-->
     <string name="app_name">קומפוז דסקטופ</string>
     <string name="error_not_internet_connection">שגיאה, אתם לא מחוברים לאינטרנט.</string>

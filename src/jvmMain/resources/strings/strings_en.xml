@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--TRAY SYSTEM-->
+    <string name="tray_button_open_app">Open</string>
+    <string name="tray_button_quit_app">Quit</string>
+
     <!--MAIN UI-->
     <string name="app_name">Compose Desktop</string>
     <string name="error_not_internet_connection">Error, you're not connected to Internet.</string>

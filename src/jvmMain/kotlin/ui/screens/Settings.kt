@@ -83,7 +83,8 @@ fun Settings() {
                 Tab(
                     text = { Text(text = title) },
                     selected = selectedTabIndex == index,
-                    onClick = { vm.onTabSelected(index) }
+                    onClick = { vm.onTabSelected(index) },
+                    modifier = PointerModifier
                 )
             }
         }
@@ -453,7 +454,7 @@ fun ExitModeButton(vm: MainViewModel){
                     DropdownMenuItem(text = {
                         Text(
                             text = mode.text,
-                            fontWeight = if (mode.name == vm.appCloseAction.collectAsState().value) FontWeight.Bold else FontWeight.Normal
+                            fontWeight = if (mode.name == vm.appCloseAction.value) FontWeight.Bold else FontWeight.Normal
                         )
                     }, onClick = {
                         selectedMode = mode.text

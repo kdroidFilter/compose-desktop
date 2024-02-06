@@ -56,6 +56,8 @@ fun Home() {
     ) {
         Text("${stringResource("hello")}${mainViewModel.getName()} !")
 
+
+        /*
         Button(
             modifier = Modifier,
             onClick = { vm.showDialog() }
@@ -65,6 +67,7 @@ fun Home() {
 
         NotesList(notesList, vm)
 
+         */
     }
 }
 

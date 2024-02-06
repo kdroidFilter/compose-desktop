@@ -63,13 +63,12 @@ class MainViewModel(
     private val applicationScope: ApplicationScope
 ) : ViewModel() {
 
-   val client = TrustAllCertsHttpClient.client
-//    val client = HttpClient(CIO)
+    val client = TrustAllCertsHttpClient.client
 
     //APP CLOSE ACTION
 
-    private val _appCloseAction = MutableStateFlow(preferencesManager.getAppCloseAction())
-    val appCloseAction = _appCloseAction.asStateFlow()
+    private val _appCloseAction = mutableStateOf(preferencesManager.getAppCloseAction())
+    val appCloseAction = _appCloseAction
 
     fun getAllAppCloseActions(): List<CloseAppAction> = CloseAppAction.entries
     fun setAppCloseAction(mode: String) {
@@ -84,20 +83,25 @@ class MainViewModel(
         }
     }
 
-    fun exit(forceExit : Boolean = false): () -> Unit {
-        return if (_appCloseAction.value != CloseAppAction.BACKGROUND.text || forceExit) {
-            applicationScope::exitApplication
-        } else {
-            { setWindowVisibility(false) }
-        }
+    fun closeAppAction() = if (_appCloseAction.value == CloseAppAction.EXIT.name) {
+        exitAppAction()
+    } else {
+        { setWindowVisibility(false) }
     }
+
+    fun exitAppAction(): () -> Unit {
+        return applicationScope::exitApplication
+    }
+
 
     //Hide Windows
     private val _isWindowVisible = MutableStateFlow(true)
     val isWindowVisible = _isWindowVisible.asStateFlow()
-    fun setWindowVisibility(visible: Boolean) { _isWindowVisible.value = visible }
+    fun setWindowVisibility(visible: Boolean) {
+        _isWindowVisible.value = visible
+    }
 
-    fun openTrayButton(){
+    fun openTrayButton() {
         _isWindowVisible.value = true
         _windowsState.isMinimized = false
     }
@@ -130,7 +134,7 @@ class MainViewModel(
     private val _currentTheme = MutableStateFlow(preferencesManager.getWindowsTheme())
     val currentTheme = _currentTheme.asStateFlow()
 
-    fun setWindowsTheme(theme : WindowsTheme) {
+    fun setWindowsTheme(theme: WindowsTheme) {
         preferencesManager.setWindowsTheme(theme)
         _currentTheme.value = theme.text
         restartToApplyChangesSnackBarMessage()
@@ -148,7 +152,6 @@ class MainViewModel(
     fun setAlwaysOnTop(value: Boolean) {
         preferencesManager.setAlwaysOnTopMode(value)
         _alwaysOnTopMode.value = value
-        resetAppSuccessSnackBarMessage()
     }
 
 
@@ -219,20 +222,20 @@ class MainViewModel(
         action()
     }
 
-    fun resetAppSuccessSnackBarMessage(){
+    fun resetAppSuccessSnackBarMessage() {
         showSnackbar(
             stringResource("reset_success_message"),
             actionLabel = stringResource("exit_action"),
-            action = exit(),
+            action = closeAppAction(),
             duration = SnackbarDuration.Long
         )
     }
 
-    private fun restartToApplyChangesSnackBarMessage(){
+    private fun restartToApplyChangesSnackBarMessage() {
         showSnackbar(
             stringResource("restart_app_to_apply_changes"),
             actionLabel = stringResource("exit_action"),
-            action = exit(),
+            action = closeAppAction(),
             duration = SnackbarDuration.Long
         )
     }
@@ -337,7 +340,7 @@ class MainViewModel(
     // LANGUAGE FUNCTION
     private var _isRtl = localizationRepository.isCurrentLanguageRtl()
     fun isCurrentLanguageRtl() = _isRtl
-    private var _currentLanguage = MutableStateFlow( localizationRepository.currentLanguageCode())
+    private var _currentLanguage = MutableStateFlow(localizationRepository.currentLanguageCode())
     val currentLanguage = _currentLanguage.asStateFlow()
     fun getCurrentLanguageName() = localizationRepository.currentLanguage()!!.name
     fun changeLanguage(key: String) {
@@ -347,7 +350,7 @@ class MainViewModel(
         showSnackbar(
             stringResource("language_change_success_message"),
             actionLabel = stringResource("exit_action"),
-            action = exit(),
+            action = closeAppAction(),
             duration = SnackbarDuration.Long
         )
     }
@@ -371,33 +374,37 @@ class MainViewModel(
         )
     }
 
-    private val _windowsState =  WindowState(
+    private val _windowsState = WindowState(
         placement = _windowsPlacement.value,
         position = WindowPosition.Aligned(Alignment.Center),
-        size = DpSize(1280.dp, 720.dp
-    ))
+        size = DpSize(
+            1280.dp, 720.dp
+        )
+    )
     val windowsState = _windowsState
     private var _windowsPlacementToggle =
         MutableStateFlow(WindowsPlacementConfig.getPropertyByPlacement(_windowsPlacement.value) != WindowsPlacementConfig.FULLSCREEN.property)
 
     //MINIMIZED WINDOWS
-    fun minimized(){
+    fun minimized() {
         _windowsState.isMinimized = !_windowsState.isMinimized
     }
-    fun maximixed(){
-        _windowsState.placement  = WindowPlacement.Maximized
-    }
-    fun floating(){
-        _windowsState.placement  = WindowPlacement.Floating
+
+    fun maximixed() {
+        _windowsState.placement = WindowPlacement.Maximized
     }
 
-    val isMaximised = MutableStateFlow( _windowsPlacement.value == WindowPlacement.Maximized)
+    fun floating() {
+        _windowsState.placement = WindowPlacement.Floating
+    }
 
-    fun toggleMaximixed(){
-        if (!isMaximised.value){
+    val isMaximised = MutableStateFlow(_windowsPlacement.value == WindowPlacement.Maximized)
+
+    fun toggleMaximixed() {
+        if (!isMaximised.value) {
             maximixed()
             isMaximised.value = true
-        }else {
+        } else {
             floating()
             isMaximised.value = false
         }

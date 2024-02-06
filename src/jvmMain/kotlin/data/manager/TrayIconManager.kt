@@ -1,15 +1,11 @@
 package data.manager
 
-import dorkbox.systemTray.Checkbox
-import dorkbox.systemTray.Menu
 import dorkbox.systemTray.MenuItem
 import dorkbox.systemTray.Separator
 import dorkbox.systemTray.SystemTray
 import org.koin.java.KoinJavaComponent.getKoin
-import org.koin.mp.KoinPlatform
+import utils.stringResource
 import viewmodel.MainViewModel
-import java.util.logging.LogManager
-import kotlin.system.exitProcess
 
 class TrayIconManager() {
     val vm: MainViewModel = getKoin().get()
@@ -31,7 +27,7 @@ class TrayIconManager() {
 
     fun setupMenu() {
         // add a menu item
-        menu.add(MenuItem("Open") {
+        menu.add(MenuItem(stringResource("tray_button_open_app")) {
             vm.openTrayButton()
         })
 
@@ -45,8 +41,8 @@ class TrayIconManager() {
         // add a separator
         menu.add(Separator())
 
-        menu.add(MenuItem("Exit") {
-            vm.exit(forceExit = true).invoke()
+        menu.add(MenuItem(stringResource("tray_button_quit_app")) {
+            vm.exitAppAction().invoke()
         })
 
         // add a submenu
