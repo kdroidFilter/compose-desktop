@@ -464,6 +464,5 @@ fun ExitModeButton(vm: MainViewModel){
                 }
             }
         }
-
     })
 }

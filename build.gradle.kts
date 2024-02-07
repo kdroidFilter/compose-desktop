@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.kdroidFilter.compose-desktop"
-version = "0.2.3"
+version = "0.2.3.1"
 
 repositories {
     mavenCentral()
@@ -65,7 +65,7 @@ kotlin {
                 implementation(libs.jsoup)
                 implementation(libs.materialKolor)
                 implementation(libs.mpfilepicker)
-        //        implementation(libs.pdfReader)
+                //        implementation(libs.pdfReader)
 
                 //Database Librairies
                 implementation(libs.sqldelight.driver)

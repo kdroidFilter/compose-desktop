@@ -226,7 +226,7 @@ class MainViewModel(
         showSnackbar(
             stringResource("reset_success_message"),
             actionLabel = stringResource("exit_action"),
-            action = closeAppAction(),
+            action = exitAppAction(),
             duration = SnackbarDuration.Long
         )
     }
@@ -235,7 +235,7 @@ class MainViewModel(
         showSnackbar(
             stringResource("restart_app_to_apply_changes"),
             actionLabel = stringResource("exit_action"),
-            action = closeAppAction(),
+            action = exitAppAction(),
             duration = SnackbarDuration.Long
         )
     }
@@ -350,7 +350,7 @@ class MainViewModel(
         showSnackbar(
             stringResource("language_change_success_message"),
             actionLabel = stringResource("exit_action"),
-            action = closeAppAction(),
+            action = exitAppAction(),
             duration = SnackbarDuration.Long
         )
     }

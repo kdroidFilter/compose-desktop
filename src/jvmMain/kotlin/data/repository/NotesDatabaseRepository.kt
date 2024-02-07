@@ -9,7 +9,7 @@ import utils.getRessourcePath
 
 object NotesDatabaseRepository {
     // ReadOnly database val path = getRessourcePath(true) + "/database.db"
-    val path = getApplicationStoragePath("compose-desktop") + "/database.db"
+    val path = getApplicationStoragePath() + "/database.db"
     val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:$path")
 
     init {

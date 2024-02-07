@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.window.WindowDraggableArea
@@ -26,6 +27,7 @@ import ui.components.KofiButton
 import ui.components.TopBarElements
 import ui.components.loadAppIcon
 import ui.dialogs.UpdaterDialog
+import utils.InstanceManager
 import utils.SnackBarDisplayer
 import utils.stringResource
 import viewmodel.MainViewModel
@@ -33,7 +35,8 @@ import java.awt.Dimension
 import java.util.Locale
 
 
-fun main() = application() {
+fun main() = application {
+    InstanceManager.checkForExistingInstance()
 
     val appModule = AppModule
     startKoin {
@@ -44,12 +47,13 @@ fun main() = application() {
             appModule.notesModule,
             appModule.contactModule,
             appModule.trayModule
-            )
+        )
     }
+
     val stateHolder = remember { StateHolder() }
     CompositionLocalProvider(LocalStateHolder provides stateHolder) {
-
         val vm: MainViewModel = koinViewModel { parametersOf(this) }
+        InstanceManager.showActiveInstanceWindow()
         val trayIconManager: TrayIconManager = getKoin().get()
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
         val appIcon = loadAppIcon()
@@ -63,8 +67,8 @@ fun main() = application() {
             visible = vm.isWindowVisible.collectAsState().value
         ) {
             window.minimumSize = Dimension(680, 370)
-            App() {
-                val snackbarHostState : SnackbarHostState = getKoin().get()
+            App {
+                val snackbarHostState: SnackbarHostState = getKoin().get()
                 SnackBarDisplayer()
                 Scaffold(
                     topBar = { WindowDraggableArea { TopBarElements().TopBar() } },
@@ -80,7 +84,5 @@ fun main() = application() {
                 }
             }
         }
-
     }
 }
-
