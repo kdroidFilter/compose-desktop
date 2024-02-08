@@ -45,7 +45,6 @@ kotlin {
                 api(libs.precompose.viewmodel)
 
                 // Utility Libraries
-                implementation(libs.notify)
                 implementation(libs.jsystemThemeDetector)
                 implementation(libs.logbackClassic)
 
