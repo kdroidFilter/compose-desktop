@@ -1,7 +1,6 @@
 package utils
 
 import data.manager.PreferencesManager
-import data.model.Language
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import utils.Localization.localizedStrings
@@ -10,17 +9,14 @@ import java.util.Locale
 import javax.xml.parsers.DocumentBuilderFactory
 
 object Localization {
+    private val config = Config
     private val preferenceRepository = PreferencesManager
     private var _currentLocale = if (preferenceRepository.isLanguageSet()) preferenceRepository.getCurrentLanguage()!! else Locale.getDefault().language
 
 
     var localizedStrings: Map<String, String> = mapOf()
 
-    fun availableLanguages() = listOf(
-        Language("en", "English"),
-        Language("he", "עברית", true),
-        Language("fr", "Français"),
-    )
+    fun availableLanguages() = config.AVAILABLE_LANGUAGES
 
     fun isCurrentLanguageRtl(): Boolean {
         return availableLanguages().find { it.code == _currentLocale }?.isRtl ?: false
@@ -41,7 +37,7 @@ object Localization {
             localizedStrings = loadLocalizedStrings(_currentLocale)
         } catch (e: Exception) {
             e.printStackTrace()
-            _currentLocale = "en"
+            _currentLocale = config.DEFAULT_LANGUAGE
             localizedStrings = loadLocalizedStrings(_currentLocale)
         }
     }
