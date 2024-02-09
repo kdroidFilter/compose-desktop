@@ -6,6 +6,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.mp.KoinPlatform.getKoin
+import utilsc.Config
 import viewmodel.MainViewModel
 import java.io.PrintWriter
 import java.net.ServerSocket

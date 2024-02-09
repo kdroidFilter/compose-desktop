@@ -4,8 +4,8 @@ import dorkbox.systemTray.MenuItem
 import dorkbox.systemTray.Separator
 import dorkbox.systemTray.SystemTray
 import org.koin.java.KoinJavaComponent.getKoin
-import utils.Config
 import utils.stringResource
+import utilsc.Config
 import viewmodel.MainViewModel
 
 class TrayIconManager() {

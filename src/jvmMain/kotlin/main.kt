@@ -7,6 +7,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -53,7 +54,9 @@ fun main() = application {
     val stateHolder = remember { StateHolder() }
     CompositionLocalProvider(LocalStateHolder provides stateHolder) {
         val vm: MainViewModel = koinViewModel { parametersOf(this) }
-        InstanceManager.showActiveInstanceWindow()
+        LaunchedEffect(Unit) { // Unit indique que l'effet doit être lancé une seule fois
+            InstanceManager.showActiveInstanceWindow()
+        }
         val trayIconManager: TrayIconManager = getKoin().get()
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
         val appIcon = loadAppIcon()

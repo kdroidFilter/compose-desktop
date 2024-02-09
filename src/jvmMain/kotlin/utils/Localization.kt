@@ -4,6 +4,7 @@ import data.manager.PreferencesManager
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import utils.Localization.localizedStrings
+import utilsc.Config
 import java.io.FileNotFoundException
 import java.util.Locale
 import javax.xml.parsers.DocumentBuilderFactory
