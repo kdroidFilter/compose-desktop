@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.kdroidFilter.compose-desktop"
-version = "0.3.1"
+version = "0.3.2"
 
 repositories {
     mavenCentral()

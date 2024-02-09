@@ -15,11 +15,9 @@ class TrayIconManager() {
 
     init {
         setupTrayIcon()
-        if (!isMenuInitialized) {
-            setupMenu()
-            isMenuInitialized = true
-        }
+        setupMenu()
     }
+
     private fun setupTrayIcon() {
         val trayIcon = this::class.java.classLoader.getResource("AppIcon.png")
         tray.setImage(trayIcon)
