@@ -11,7 +11,6 @@ import data.repository.TextRepository
 import data.repository.ThemeModeRepository
 import data.repository.VersionRepository
 import data.repository.WindowsPlacementRepository
-import dorkbox.systemTray.SystemTray
 import moe.tlaster.precompose.navigation.Navigator
 import org.koin.dsl.module
 import utils.Localization
@@ -42,8 +41,7 @@ object AppModule {
                 themeModeRepository = get(),
                 textRepository = get(),
                 settingsTabsRepository = get(),
-                applicationScope = applicationScope
-            )
+                applicationScope = applicationScope)
         }
     }
 

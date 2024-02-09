@@ -53,7 +53,6 @@ fun main() = application {
     val stateHolder = remember { StateHolder() }
     CompositionLocalProvider(LocalStateHolder provides stateHolder) {
         val vm: MainViewModel = koinViewModel { parametersOf(this) }
-        InstanceManager.showActiveInstanceWindow()
         val trayIconManager: TrayIconManager = getKoin().get()
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
         val appIcon = loadAppIcon()
@@ -67,6 +66,7 @@ fun main() = application {
             visible = vm.isWindowVisible.collectAsState().value
         ) {
             window.minimumSize = Dimension(680, 370)
+            InstanceManager.showActiveInstanceWindow()
             App {
                 val snackbarHostState: SnackbarHostState = getKoin().get()
                 SnackBarDisplayer()

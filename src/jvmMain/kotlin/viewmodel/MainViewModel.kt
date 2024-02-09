@@ -50,7 +50,6 @@ import utils.DarkModeDetector
 import utils.Localization
 import utils.TrustAllCertsHttpClient
 import utils.stringResource
-import java.lang.Thread.sleep
 
 class MainViewModel(
     private val localizationRepository: Localization,
@@ -61,8 +60,7 @@ class MainViewModel(
     private val windowsPlacementRepository: WindowsPlacementRepository,
     private val textRepository: TextRepository,
     private val settingsTabsRepository: SettingsTabsRepository,
-    private val applicationScope: ApplicationScope
-) : ViewModel() {
+    private val applicationScope: ApplicationScope) : ViewModel() {
 
     val client = TrustAllCertsHttpClient.client
 
@@ -103,13 +101,8 @@ class MainViewModel(
     }
 
     fun openTrayButton() {
-        viewModelScope.launch {
             _isWindowVisible.value = true
             _windowsState.isMinimized = false
-            _alwaysOnTopMode.value = true
-            sleep(1000)
-            _alwaysOnTopMode.value = preferencesManager.getAlwaysOnTopMode()
-        }
     }
 
 
