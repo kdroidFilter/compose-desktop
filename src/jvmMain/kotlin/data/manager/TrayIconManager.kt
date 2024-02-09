@@ -4,6 +4,7 @@ import dorkbox.systemTray.MenuItem
 import dorkbox.systemTray.Separator
 import dorkbox.systemTray.SystemTray
 import org.koin.java.KoinJavaComponent.getKoin
+import utils.Config
 import utils.stringResource
 import viewmodel.MainViewModel
 
@@ -14,8 +15,10 @@ class TrayIconManager() {
     private var isMenuInitialized = false
 
     init {
-        setupTrayIcon()
-        setupMenu()
+        if (Config.ENABLE_TRAY_ICON) {
+            setupTrayIcon()
+            setupMenu()
+        }
     }
 
     private fun setupTrayIcon() {

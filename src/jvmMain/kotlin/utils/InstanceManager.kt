@@ -13,8 +13,11 @@ import java.net.Socket
 import kotlin.system.exitProcess
 
 object InstanceManager {
-    private const val port = Config.PORT
+    private val config = Config
+    private const val allow_only_one_instance = config.ALLOW_ONLY_ONE_INSTANCE
+    private const val port = config.PORT
     fun checkForExistingInstance() {
+        if (!allow_only_one_instance) return
         try {
             // Tente de se connecter au serveur socket existant
             Socket("localhost", port).use { socket ->
@@ -30,6 +33,7 @@ object InstanceManager {
 
     @OptIn(DelicateCoroutinesApi::class)
     fun showActiveInstanceWindow() {
+        if (!allow_only_one_instance) return
         val vm : MainViewModel = getKoin().get()
         GlobalScope.launch(Dispatchers.IO) {
             try {
