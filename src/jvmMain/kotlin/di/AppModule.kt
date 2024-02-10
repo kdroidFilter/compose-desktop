@@ -3,7 +3,6 @@ package di
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.ui.window.ApplicationScope
 import data.manager.PreferencesManager
-import data.manager.TrayIconManager
 import data.repository.ColorRepository
 import data.repository.NotesDatabaseRepository
 import data.repository.SettingsTabsRepository
@@ -68,9 +67,4 @@ object AppModule {
         }
     }
 
-    val trayModule = module {
-        single {
-            TrayIconManager()
-        }
-    }
 }

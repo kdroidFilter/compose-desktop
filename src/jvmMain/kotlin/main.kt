@@ -37,6 +37,7 @@ import java.util.Locale
 
 
 fun main() = application {
+
     InstanceManager.checkForExistingInstance()
 
     val appModule = AppModule
@@ -46,18 +47,16 @@ fun main() = application {
             appModule.navigatorModule,
             appModule.snackbarHostState,
             appModule.notesModule,
-            appModule.contactModule,
-            appModule.trayModule
-        )
+            appModule.contactModule)
     }
 
     val stateHolder = remember { StateHolder() }
     CompositionLocalProvider(LocalStateHolder provides stateHolder) {
         val vm: MainViewModel = koinViewModel { parametersOf(this) }
-        LaunchedEffect(Unit) { // Unit indique que l'effet doit être lancé une seule fois
+        LaunchedEffect(Unit) {
             InstanceManager.showActiveInstanceWindow()
+            TrayIconManager(this)
         }
-        val trayIconManager: TrayIconManager = getKoin().get()
         Locale.setDefault(Locale(vm.currentLanguage.collectAsState().value))
         val appIcon = loadAppIcon()
         Window(
