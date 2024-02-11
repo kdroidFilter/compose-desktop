@@ -58,7 +58,9 @@ import ui.components.PointerModifier
 import ui.components.RowLabel
 import ui.components.SubTitle
 import utils.Localization
+import utils.OsDetector
 import utils.stringResource
+import utilsc.Config
 import viewmodel.MainViewModel
 
 
@@ -398,6 +400,7 @@ fun FeedSwitchButton(vm: MainViewModel) {
 
 @Composable
 fun WindowsThemeSelection(vm: MainViewModel) {
+    if (OsDetector.isWindows()) return
     AlignedRow({ RowLabel(stringResource("select_windowstheme_style_label")) }, {
         var isOpened by remember { mutableStateOf(false) }
         var selectedMode = vm.currentTheme.collectAsState().value
@@ -439,6 +442,7 @@ fun AlwaysOnTopButtonMode(vm: MainViewModel) {
 
 @Composable
 fun ExitModeButton(vm: MainViewModel){
+    if(!Config.ALLOW_ONLY_ONE_INSTANCE || !Config.ENABLE_TRAY_ICON) return
     AlignedRow({
         RowLabel(stringResource("app_close_action_label")) },{
         var isOpened by remember { mutableStateOf(false) }
