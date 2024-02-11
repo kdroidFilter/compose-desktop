@@ -19,7 +19,7 @@ import data.api.VersionApi
 import data.implementation.KofiPostScrapperImpl
 import data.implementation.TextScrapperImpl
 import data.implementation.VersionApiImpl
-import data.manager.PreferencesManager
+import manager.PreferencesManager
 import data.model.AppVersion
 import data.model.KofiPost
 import data.model.SnackbarEvent

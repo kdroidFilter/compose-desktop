@@ -1,4 +1,4 @@
-package data.manager
+package manager
 
 import com.russhwolf.settings.PreferencesSettings
 import com.russhwolf.settings.Settings

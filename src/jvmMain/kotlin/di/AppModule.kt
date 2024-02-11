@@ -2,7 +2,7 @@ package di
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.ui.window.ApplicationScope
-import data.manager.PreferencesManager
+import manager.PreferencesManager
 import data.repository.ColorRepository
 import data.repository.NotesDatabaseRepository
 import data.repository.SettingsTabsRepository

@@ -1,4 +1,4 @@
-package data.manager
+package manager
 
 import dorkbox.systemTray.MenuItem
 import dorkbox.systemTray.Separator
@@ -6,9 +6,11 @@ import dorkbox.systemTray.SystemTray
 import kotlinx.coroutines.CoroutineScope
 import org.koin.java.KoinJavaComponent.getKoin
 import utils.stringResource
+import utilsc.Config
 import viewmodel.MainViewModel
 
-    fun TrayIconManager(context : CoroutineScope) {
+fun TrayIconManager(context: CoroutineScope) {
+    if (!Config.ENABLE_TRAY_ICON) return
     val vm: MainViewModel = getKoin().get()
 
     SystemTray.DEBUG = true

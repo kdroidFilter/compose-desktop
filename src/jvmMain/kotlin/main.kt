@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.example.compose.App
-import data.manager.TrayIconManager
+import manager.TrayIconManager
 import di.AppModule
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.stateholder.LocalStateHolder
@@ -28,7 +28,7 @@ import ui.components.KofiButton
 import ui.components.TopBarElements
 import ui.components.loadAppIcon
 import ui.dialogs.UpdaterDialog
-import utils.InstanceManager
+import manager.InstanceManager
 import utils.SnackBarDisplayer
 import utils.stringResource
 import viewmodel.MainViewModel

@@ -1,4 +1,4 @@
-package utils
+package manager
 
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
